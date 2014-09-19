@@ -2,7 +2,10 @@ package com.ticketmaster.cobspec;
 
 import java.util.List;
 
-import cucumber.api.DataTable;
+import org.databene.contiperf.PerfTest;
+import org.databene.contiperf.junit.ContiPerfRule;
+import org.junit.Rule;
+
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -31,5 +34,14 @@ public class TestSteps {
           // Use the request type in here
       }
   }
+  
+  @When("^I run my GET baseline$")
+  public void i_run_my_GET_baseline() throws Throwable {
+       System.out.println("Hello");
+  }
 
+  @Then("^I should see this graph$")
+  public void i_should_see_this_graph() throws Throwable {
+      
+  }
 }
