@@ -9,7 +9,7 @@ public class SimultaneousRequestsTest {
   @Rule
   public ContiPerfRule i = new ContiPerfRule();
 
-  @PerfTest(duration = 10000, threads = 20, rampUp = 1000, warmUp = 1000)
+  @PerfTest(invocations = 4096, threads = 20)
   @Test
   public void hitGetEndpointOfService() {
     // Make a get call to the service method
