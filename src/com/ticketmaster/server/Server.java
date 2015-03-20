@@ -37,6 +37,8 @@ public class Server extends Thread{
 
             HttpHandler httpHandler = new HttpHandler(in, out);
 
+            // TODO: server will listen for request, then out a response
+
         } catch (IOException e) {
             e.printStackTrace();
         }

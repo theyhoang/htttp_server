@@ -7,20 +7,31 @@ import com.ticketmaster.server.model.Response;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by yen.hoang on 3/5/15.
  */
 public class HttpHandler {
 
+    // TODO : multiple version of HTTP?
+    private final String HTTP_VERSION = "HTTP/1.0";
     private BufferedReader input;
     private DataOutputStream output;
+    private List<String> paths;
 
     public HttpHandler(BufferedReader input, DataOutputStream output){
         this.input = input;
         this.output = output;
     }
 
+    public void setPaths(List<String> paths) {
+        this.paths = paths;
+    }
+
+    public List<String> getPaths() {
+        return paths;
+    }
 
 //    GET /path/file.html HTTP/1.0
 //    From: someuser@jmarshall.com
@@ -47,16 +58,10 @@ public class HttpHandler {
         if (input == null)
             return null;
 
-        Request request = new Request();
-        String methodString = input.readLine();
-
-        // first get method
-        request.setHttpMethod(methodString);
-        if (request.getHttpMethod() == Method.NOT_SUPPORTED) { // not supported
+        RequestParser requestParser = new RequestParser();
+        Request request = requestParser.parse(input);
+        if (request == null)
             output.close();
-            return null;
-        }
-
 
         return request;
     }
@@ -65,10 +70,9 @@ public class HttpHandler {
     // based on protocol
     // construct response
     // return as string or class
-    public String getResponse() {
-        Response response = new Response();
-
-        return null;
+    public String getResponse(Request request) {
+        String response = constructResponseDetails(request).toString();
+        return response;
     }
 
 
@@ -79,10 +83,18 @@ public class HttpHandler {
     //    out.println("");
     //    // Send the HTML page
     //    out.println("<H1>Welcome to the Ultra Mini-WebServer</H2>");
-    private Response constructResponseDetails() {
+    private Response constructResponseDetails(Request request) {
         if (output == null)
             return null;
-        return null;
+        Response response = new Response();
+        if (paths.contains(request.getUrl()))
+            response.setStatusCode(Response.STATUS_CODE_OK);
+        else
+            response.setStatusCode(Response.STATUS_CODE_NOT_FOUND);
+
+        response.setHttpVersion(HTTP_VERSION);
+
+        return response;
     }
 
 }

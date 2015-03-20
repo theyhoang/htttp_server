@@ -14,6 +14,7 @@ public class Request {
     private String url;
     private String message;
     private String userAgent;
+    private String httpVersion;
 
 
     public Method getHttpMethod() {
@@ -52,5 +53,13 @@ public class Request {
 
     public void setUserAgent(String userAgent) {
         this.userAgent = userAgent;
+    }
+
+    public void setHttpVersion(String httpVersion) {
+        this.httpVersion = httpVersion;
+    }
+
+    public String getHttpVersion() {
+        return httpVersion;
     }
 }
