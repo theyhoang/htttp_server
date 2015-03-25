@@ -21,7 +21,12 @@ public class Server extends Thread{
     }
 
 
-    // Start server here
+    public static void main(String[] args) {
+        // get port number and public directory from args
+
+        // Start server here
+
+    }
     public void run() {
         start();
     }

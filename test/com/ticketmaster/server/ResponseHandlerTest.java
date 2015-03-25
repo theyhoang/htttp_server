@@ -27,17 +27,18 @@ public class ResponseHandlerTest {
 
 
         DataOutputStream out = new DataOutputStream(System.out);
+        InputStream stream = new ByteArrayInputStream(testRequestString.getBytes(StandardCharsets.UTF_8));
 
         ResponseHandler responseHandler = new ResponseHandler(out);
-//        List<String> paths = new ArrayList<String>();
-//        paths.add("/path/file.html");
-//        httpHandler.setPaths(paths);
-//        Request request = httpHandler.readRequest();
-//
-//        Assert.assertNotNull(request);
-//        String response = httpHandler.getResponse(request);
-//
-//        Assert.assertEquals("HTTP/1.0 200 OK", response);
-        Assert.assertNotNull(null);
+        RequestHandler requestHandler = new RequestHandler(new BufferedReader( new InputStreamReader(stream)));
+        List<String> paths = new ArrayList<String>();
+        paths.add("/path/file.html");
+        responseHandler.setPaths(paths);
+        Request request = requestHandler.readRequest();
+
+        Assert.assertNotNull(request);
+        String response = responseHandler.getResponse(request);
+
+        Assert.assertEquals("HTTP/1.0 200 OK", response);
     }
 }
