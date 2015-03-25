@@ -35,8 +35,8 @@ public class Server extends Thread{
             BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()) );
             DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
 
-            HttpHandler httpHandler = new HttpHandler(in, out);
-
+            ResponseHandler responseHandler = new ResponseHandler(out);
+            RequestHandler requestHandler = new RequestHandler(in);
             // TODO: server will listen for request, then out a response
 
         } catch (IOException e) {
