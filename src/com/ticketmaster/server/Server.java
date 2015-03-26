@@ -13,8 +13,8 @@ import java.net.Socket;
  */
 public class Server extends Thread{
 
-    private int portNumber;
-    private ServerSocket serverSocket;
+    private static int portNumber;
+    private static ServerSocket serverSocket;
 
     public Server(int portNumber) {
         this.portNumber = portNumber;
@@ -25,13 +25,15 @@ public class Server extends Thread{
         // get port number and public directory from args
 
         // Start server here
+        startServer();
 
     }
     public void run() {
         start();
     }
 
-    public void start() {
+    public static void startServer() {
+        System.out.println("STARTING SERVER!!!!!");
         Socket clientSocket = null;
 
         try {
