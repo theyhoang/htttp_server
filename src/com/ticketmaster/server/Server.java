@@ -56,7 +56,7 @@ public class Server extends Thread{
         System.out.println("Public Directory: " + publicDirPath);
 
         // Start server here
-        //        startServer();
+        startServer();
     }
     public void run() {
         start();
@@ -66,17 +66,47 @@ public class Server extends Thread{
         Socket clientSocket = null;
 
         try {
-            serverSocket = new ServerSocket(portNumber);
-            clientSocket = serverSocket.accept();
-            BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()) );
-            DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
 
-            ResponseHandler responseHandler = new ResponseHandler(out);
-            RequestHandler requestHandler = new RequestHandler(in);
+
+//            ResponseHandler responseHandler = new ResponseHandler(out);
+//            RequestHandler requestHandler = new RequestHandler(in);
+//            requestHandler.start();
+            serverSocket = new ServerSocket(portNumber);
+
+
+            while (true) {
+                clientSocket = serverSocket.accept();
+
+                BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()) );
+                DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
+                PrintWriter printWriter =
+                    new PrintWriter(out, true);
+                String userInput;
+                while ((userInput = in.readLine()) != null) {
+                    // TODO: process request
+                    System.out.println(userInput);
+                    if (userInput.isEmpty()) {
+                        break;
+                    }
+                }
+
+                printWriter.write("HTTP/1.0 200 OK");
+                printWriter.write("Content-Type: text/html");
+                printWriter.write("Server: Bot");
+                // this blank line signals the end of the headers
+                printWriter.write("");
+                // Send the HTML page
+                printWriter.write("<H1>Welcome to the Ultra Mini-WebServer</H2>");
+                printWriter.write("\r\n");
+                printWriter.flush();
+                clientSocket.close();
+            }
+
             // TODO: server will listen for request, then out a response
 
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
 

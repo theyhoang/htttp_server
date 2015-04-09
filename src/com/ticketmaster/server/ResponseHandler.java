@@ -4,6 +4,7 @@ import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
 
 import java.io.DataOutputStream;
+import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -11,9 +12,14 @@ import java.util.List;
  */
 public class ResponseHandler {
 
+    // TODO: implement protocol?
+
     private DataOutputStream output;
     private final String HTTP_VERSION = "HTTP/1.0";
     private List<String> paths;
+
+//    PrintWriter out =
+//        new PrintWriter(clientSocket.getOutputStream(), true);
 
     public ResponseHandler(DataOutputStream output) {
         this.output = output;
@@ -57,5 +63,12 @@ public class ResponseHandler {
 
     public List<String> getPaths() {
         return paths;
+    }
+
+    // TODO: print out response
+    public void print(Response response) {
+            PrintWriter out =
+                new PrintWriter(output, true);
+        out.print(response);
     }
 }
