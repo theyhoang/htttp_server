@@ -88,16 +88,16 @@ public class Server extends Thread{
                     if (userInput.isEmpty()) {
                         break;
                     }
+                    // TODO: read headers, depending on method act accordingly
                 }
 
-                printWriter.write("HTTP/1.0 200 OK");
-                printWriter.write("Content-Type: text/html");
-                printWriter.write("Server: Bot");
+                printWriter.write("HTTP/1.0 200 OK \r\n");
+                printWriter.write("Content-Type: text/html \r\n");
+                printWriter.write("Server: Bot \r\n");
                 // this blank line signals the end of the headers
-                printWriter.write("");
-                // Send the HTML page
-                printWriter.write("<H1>Welcome to the Ultra Mini-WebServer</H2>");
                 printWriter.write("\r\n");
+                // Send the HTML page
+                printWriter.write("<H1>Welcome to the Ultra Mini-WebServer</H1>");
                 printWriter.flush();
                 clientSocket.close();
             }

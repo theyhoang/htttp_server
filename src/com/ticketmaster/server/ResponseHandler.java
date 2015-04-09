@@ -12,7 +12,6 @@ import java.util.List;
  */
 public class ResponseHandler {
 
-    // TODO: implement protocol?
 
     private DataOutputStream output;
     private final String HTTP_VERSION = "HTTP/1.0";

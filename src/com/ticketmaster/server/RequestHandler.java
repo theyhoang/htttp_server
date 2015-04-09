@@ -11,6 +11,8 @@ import java.io.PrintWriter;
  */
 public class RequestHandler {
 
+    // TODO: implement protocol?
+
     private BufferedReader input;
 
     public RequestHandler(BufferedReader input) {
