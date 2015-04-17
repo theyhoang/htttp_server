@@ -55,6 +55,11 @@ public class ResponseHandler {
         // TODO: HEADERS?
         response.setContentType("text/html");
         response.setServer("Bot");
+
+        // TODO: if file exists
+        // TODO: retrieve directory page with links if directory
+        // TODO: retrieve file contents if file
+
         response.setMessage("<H1>Hello Yen!</H1>");
 
         return response;
@@ -63,11 +68,30 @@ public class ResponseHandler {
     // TODO : use actual paths to check for resources
     public boolean resourceExistsInPath(String path) {
         // TODO: search for existing resource/directory
-        System.out.println("publicDirPath: " + publicDirPath);
-        System.out.println("path: " + path);
         File file = new File(publicDirPath + path);
         return file.exists();
     }
+
+    private boolean isFile(String path) {
+        File file = new File(publicDirPath + path);
+        return file.isFile();
+    }
+
+    private boolean isDirectory(String path) {
+        File file = new File(publicDirPath + path);
+        return file.isDirectory();
+    }
+
+    private String getDirectoryPage(String path) {
+
+        return null;
+    }
+
+    private String getFileContent(String path) {
+
+        return null;
+    }
+
 
     // TODO: writeResponseToClient out response
     public void writeResponseToClient(Response response) {
@@ -79,7 +103,7 @@ public class ResponseHandler {
         //    // Send the HTML page
         //    printWriter.write("<H1>Hello Sean</H1>");
         out.write(response.getInitialResponseLine());
-        // out.write(rest of headers)
+        // TODO : out.write(rest of headers)
         //
         out.write("\r\n");
         out.write(response.getMessage());
