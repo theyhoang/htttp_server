@@ -48,8 +48,9 @@ public class ResponseHandler {
         Response response = new Response();
         if (resourceExistsInPath(request.getUrl()))
             response.setStatusCode(Response.STATUS_CODE_OK);
-        else
+        else {
             response.setStatusCode(Response.STATUS_CODE_NOT_FOUND);
+        }
 
         response.setHttpVersion(HTTP_VERSION);
         // TODO: HEADERS?
@@ -59,15 +60,22 @@ public class ResponseHandler {
         // TODO: if file exists
         // TODO: retrieve directory page with links if directory
         // TODO: retrieve file contents if file
-
-        response.setMessage("<H1>Hello Yen!</H1>");
+        if (response.getStatusCode() == (Response.STATUS_CODE_OK)) {
+            if (isFile(request.getUrl())) {
+                response.setMessage(getFileContent(request.getUrl()));
+            } else if (isDirectory(request.getUrl())) {
+                response.setMessage(getDirectoryPage(request.getUrl()));
+            } else {
+                // TODO: ERROR
+            }
+        } else {
+            response.setMessage("<H1>" + response.getInitialResponseLine() + "</H1>");
+        }
 
         return response;
     }
 
-    // TODO : use actual paths to check for resources
-    public boolean resourceExistsInPath(String path) {
-        // TODO: search for existing resource/directory
+    private boolean resourceExistsInPath(String path) {
         File file = new File(publicDirPath + path);
         return file.exists();
     }
@@ -84,12 +92,12 @@ public class ResponseHandler {
 
     private String getDirectoryPage(String path) {
 
-        return null;
+        return "<H1>" + path + " IS A DIRECTORY!</H1>";
     }
 
     private String getFileContent(String path) {
 
-        return null;
+        return "<H1>" + path + " IS A FILE!</H1>";
     }
 
 
