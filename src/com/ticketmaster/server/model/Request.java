@@ -1,5 +1,7 @@
 package com.ticketmaster.server.model;
 
+import java.util.List;
+
 /**
  * Created by yen.hoang on 3/5/15.
  */
@@ -15,7 +17,7 @@ public class Request {
     private String message;
     private String userAgent;
     private String httpVersion;
-
+    private List<String> headers;
 
     public Method getHttpMethod() {
         return httpMethod;
@@ -61,5 +63,13 @@ public class Request {
 
     public String getHttpVersion() {
         return httpVersion;
+    }
+
+    public List<String> getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(List<String> headers) {
+        this.headers = headers;
     }
 }

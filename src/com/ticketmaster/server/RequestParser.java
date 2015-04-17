@@ -5,6 +5,7 @@ import com.ticketmaster.server.model.Request;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,7 +41,21 @@ public class RequestParser implements Parser {
         String httpVersion = initialRequest.get(2);
         request.setHttpVersion(httpVersion);
 
+        // TODO: read headers
+        List<String> headers = new ArrayList<String>();
+        for (int i = 0; i < inputList.size(); i++) {
+            // look for blank line to end headers
+            if (!inputList.get(i).isEmpty()) {
+                headers.add(inputList.get(i));
+            }
+        }
 
+        request.setHeaders(headers);
+
+        // TODO: get message/content
+        // check headers for content type and post/put method
+        // if (request.getHttpMethod() == Method.POST || request.getHttpMethod() == Method.PUT)
+        //
 
         return request;
     }
