@@ -12,6 +12,8 @@ import java.util.List;
 /**
  * Created by yen.hoang on 3/25/15.
  */
+
+// TODO: check tests
 public class ResponseHandlerTest {
     @Test
     public void testConstructResponse() {
@@ -28,13 +30,19 @@ public class ResponseHandlerTest {
 
         DataOutputStream out = new DataOutputStream(System.out);
         InputStream stream = new ByteArrayInputStream(testRequestString.getBytes(StandardCharsets.UTF_8));
-
-        ResponseHandler responseHandler = new ResponseHandler(out);
+        // TODO: outputstream to std out or file/string
+        PrintWriter printWriter = new PrintWriter(out, true);
+        ResponseHandler responseHandler = new ResponseHandler(printWriter);
         RequestHandler requestHandler = new RequestHandler(new BufferedReader( new InputStreamReader(stream)));
         List<String> paths = new ArrayList<String>();
         paths.add("/path/file.html");
         responseHandler.setPaths(paths);
-        Request request = requestHandler.readRequest();
+        Request request = null;
+        try {
+            request = requestHandler.readRequest();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Assert.assertNotNull(request);
         String response = responseHandler.getResponse(request);

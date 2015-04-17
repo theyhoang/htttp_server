@@ -17,11 +17,10 @@ public class RequestParser implements Parser {
 
     }
 
-    @Override
-    public Request parse(BufferedReader input) throws IOException {
+    public Request parse(List<String> inputList) throws IOException {
         Request request = new Request();
 
-        String initialRequestLine = input.readLine();
+        String initialRequestLine = inputList.get(0);
         List<String> initialRequest = Arrays.asList(initialRequestLine.split("\\s+"));
         if (initialRequest.size() != 3)
             return null;
@@ -47,4 +46,7 @@ public class RequestParser implements Parser {
     }
 
 
+    @Override public Object parse(BufferedReader input) throws IOException {
+        return null;
+    }
 }

@@ -13,15 +13,15 @@ import java.util.List;
 public class ResponseHandler {
 
 
-    private DataOutputStream output;
+    private PrintWriter out;
     private final String HTTP_VERSION = "HTTP/1.0";
     private List<String> paths;
 
 //    PrintWriter out =
 //        new PrintWriter(clientSocket.getOutputStream(), true);
 
-    public ResponseHandler(DataOutputStream output) {
-        this.output = output;
+    public ResponseHandler(PrintWriter out) {
+        this.out = out;
     }
 
     // construct response
@@ -42,7 +42,7 @@ public class ResponseHandler {
     //    // Send the HTML page
     //    out.println("<H1>Welcome to the Ultra Mini-WebServer</H2>");
     private Response constructResponseDetails(Request request) {
-        if (output == null)
+        if (out == null)
             return null;
         Response response = new Response();
         if (paths.contains(request.getUrl()))
@@ -66,8 +66,6 @@ public class ResponseHandler {
 
     // TODO: print out response
     public void print(Response response) {
-            PrintWriter out =
-                new PrintWriter(output, true);
         out.print(response);
     }
 }

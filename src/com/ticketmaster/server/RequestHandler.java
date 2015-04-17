@@ -5,6 +5,8 @@ import com.ticketmaster.server.model.Request;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yen.hoang on 3/25/15.
@@ -27,29 +29,39 @@ public class RequestHandler {
         }
     }
 
-    public Request readRequest() {
+    public List<String> readInput() throws IOException {
+        List<String> inputList = new ArrayList<>();
+        String userInput;
+        while ((userInput = input.readLine()) != null) {
+            System.out.println(userInput);
+            inputList.add(userInput);
+            if (userInput.isEmpty()) {
+                break;
+            }
+        }
+        return inputList;
+    }
+
+    public Request readRequest() throws IOException {
+        List<String> inputList = readInput();
+
+        // TODO: process request
+        // TODO: read headers, depending on method act accordingly, return
+
         // parse string
         // create new request object
         // return request as string or as class
 
-        Request request = null;
-        try {
-            request = parseForRequestDetails(input);
+        Request request = parseForRequestDetails(inputList);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         return request;
     }
 
 
-    private Request parseForRequestDetails(BufferedReader input) throws IOException{
-        if (input == null)
-            return null;
-
+    private Request parseForRequestDetails(List<String> inputList) throws IOException{
         RequestParser requestParser = new RequestParser();
-        Request request = requestParser.parse(input);
+        Request request = requestParser.parse(inputList);
 
         return request;
     }

@@ -68,8 +68,7 @@ public class Server extends Thread{
         try {
 
 
-//            ResponseHandler responseHandler = new ResponseHandler(out);
-//            RequestHandler requestHandler = new RequestHandler(in);
+
 //            requestHandler.start();
             serverSocket = new ServerSocket(portNumber);
 
@@ -79,25 +78,27 @@ public class Server extends Thread{
 
                 BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()) );
                 DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
-                PrintWriter printWriter =
-                    new PrintWriter(out, true);
-                String userInput;
-                while ((userInput = in.readLine()) != null) {
-                    // TODO: process request
-                    System.out.println(userInput);
-                    if (userInput.isEmpty()) {
-                        break;
-                    }
-                    // TODO: read headers, depending on method act accordingly
-                }
+                PrintWriter printWriter = new PrintWriter(out, true);
+                ResponseHandler responseHandler = new ResponseHandler(printWriter);
+                RequestHandler requestHandler = new RequestHandler(in);
 
+                // TODO: while requestHandler is reading request
+                Request request = requestHandler.readRequest();
+
+//                    // TODO: process request
+//                    // TODO: read headers, depending on method act accordingly, return
+//                }
+
+
+
+                // TODO: write out response to client
                 printWriter.write("HTTP/1.0 200 OK \r\n");
                 printWriter.write("Content-Type: text/html \r\n");
                 printWriter.write("Server: Bot \r\n");
                 // this blank line signals the end of the headers
                 printWriter.write("\r\n");
                 // Send the HTML page
-                printWriter.write("<H1>Welcome to the Ultra Mini-WebServer</H1>");
+                printWriter.write("<H1>Hello Sean</H1>");
                 printWriter.flush();
                 clientSocket.close();
             }
