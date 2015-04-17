@@ -18,7 +18,7 @@ import java.util.List;
 public class ResponseHandlerTest {
     @Test
     public void testConstructResponse() {
-        String testRequestString = "GET /favicon.ico HTTP/1.1\r\n";
+        String testRequestString = "GET / HTTP/1.1\r\n";
         testRequestString += "Host: localhost:9090\r\n";
         testRequestString += "Connection: keep-alive\r\n";
         testRequestString += "Accept: */*\r\n";
@@ -32,6 +32,7 @@ public class ResponseHandlerTest {
         InputStream stream = new ByteArrayInputStream(testRequestString.getBytes(StandardCharsets.UTF_8));
         PrintWriter printWriter = new PrintWriter(out, true);
         ResponseHandler responseHandler = new ResponseHandler(printWriter);
+        responseHandler.setPublicDirPath("");
         RequestHandler requestHandler = new RequestHandler(new BufferedReader( new InputStreamReader(stream)));
         Request request = null;
         try {

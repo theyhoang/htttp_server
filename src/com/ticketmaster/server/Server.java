@@ -81,6 +81,7 @@ public class Server extends Thread{
                 PrintWriter printWriter = new PrintWriter(out, true);
                 ResponseHandler responseHandler = new ResponseHandler(printWriter);
                 RequestHandler requestHandler = new RequestHandler(in);
+                responseHandler.setPublicDirPath(publicDirPath);
 
                 Request request = requestHandler.readRequest();
 

@@ -4,6 +4,7 @@ import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
 
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class ResponseHandler {
     private PrintWriter out;
     private final String HTTP_VERSION = "HTTP/1.1";
 
+    private String publicDirPath;
 //    PrintWriter out =
 //        new PrintWriter(clientSocket.getOutputStream(), true);
 
@@ -61,7 +63,10 @@ public class ResponseHandler {
     // TODO : use actual paths to check for resources
     public boolean resourceExistsInPath(String path) {
         // TODO: search for existing resource/directory
-        return false;
+        System.out.println("publicDirPath: " + publicDirPath);
+        System.out.println("path: " + path);
+        File file = new File(publicDirPath + path);
+        return file.exists();
     }
 
     // TODO: writeResponseToClient out response
@@ -80,5 +85,9 @@ public class ResponseHandler {
         out.write(response.getMessage());
         out.flush();
         out.close();
+    }
+
+    public void setPublicDirPath(String publicDirPath) {
+        this.publicDirPath = publicDirPath;
     }
 }
