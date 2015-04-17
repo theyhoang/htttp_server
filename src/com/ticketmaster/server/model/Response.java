@@ -100,12 +100,12 @@ public class Response {
     }
 
     //TODO
-    @Override
-    public String toString() {
+    public String getInitialResponseLine() {
         String response = "";
         response = response.concat(httpVersion);
         response = response.concat(" " + Integer.toString(statusCode));
         response = response.concat(" " + reasonPhrase);
+        response = response.concat("\r\n");
 
         return response;
     }

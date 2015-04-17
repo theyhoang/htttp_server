@@ -1,6 +1,7 @@
 package com.ticketmaster.server;
 
 import com.ticketmaster.server.model.Request;
+import com.ticketmaster.server.model.Response;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,26 +18,21 @@ import java.util.List;
 public class ResponseHandlerTest {
     @Test
     public void testConstructResponse() {
-        //        String testResponseString = "HTTP/1.0 200 OK\n";
-        //        testResponseString += "Content-Type: text/html\n";
-        //        testResponseString += "Server: Bot\n";
-        //        testResponseString += "\n";
-        //        testResponseString += "<H1>Welcome to Test Request</H1>";
-
-        String testRequestString = "GET /path/file.html HTTP/1.0\n";
-        testRequestString += "From: someuser@jmarshall.com\n";
-        testRequestString += "User-Agent: HTTPTool/1.0\n";
+        String testRequestString = "GET /favicon.ico HTTP/1.1\r\n";
+        testRequestString += "Host: localhost:9090\r\n";
+        testRequestString += "Connection: keep-alive\r\n";
+        testRequestString += "Accept: */*\r\n";
+        testRequestString += "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.118 Safari/537.36\r\n";
+        testRequestString += "Accept-Encoding: gzip, deflate, sdch\r\n";
+        testRequestString += "Accept-Language: en-US,en;q=0.8\r\n";
+        testRequestString += "\r\n";
 
 
         DataOutputStream out = new DataOutputStream(System.out);
         InputStream stream = new ByteArrayInputStream(testRequestString.getBytes(StandardCharsets.UTF_8));
-        // TODO: outputstream to std out or file/string
         PrintWriter printWriter = new PrintWriter(out, true);
         ResponseHandler responseHandler = new ResponseHandler(printWriter);
         RequestHandler requestHandler = new RequestHandler(new BufferedReader( new InputStreamReader(stream)));
-        List<String> paths = new ArrayList<String>();
-        paths.add("/path/file.html");
-        responseHandler.setPaths(paths);
         Request request = null;
         try {
             request = requestHandler.readRequest();
@@ -45,8 +41,9 @@ public class ResponseHandlerTest {
         }
 
         Assert.assertNotNull(request);
-        String response = responseHandler.getResponse(request);
+        Response response = responseHandler.getResponse(request);
 
-        Assert.assertEquals("HTTP/1.0 200 OK", response);
+        Assert.assertNotNull(response);
+        Assert.assertEquals(response.getInitialResponseLine(), "HTTP/1.1 200 OK\r\n");
     }
 }

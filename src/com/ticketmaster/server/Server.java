@@ -82,28 +82,16 @@ public class Server extends Thread{
                 ResponseHandler responseHandler = new ResponseHandler(printWriter);
                 RequestHandler requestHandler = new RequestHandler(in);
 
-                // TODO: while requestHandler is reading request
                 Request request = requestHandler.readRequest();
 
 //                    // TODO: process request
 //                    // TODO: read headers, depending on method act accordingly, return
-//                }
-
-
+                Response response = responseHandler.getResponse(request);
+                responseHandler.writeResponseToClient(response);
 
                 // TODO: write out response to client
-                printWriter.write("HTTP/1.0 200 OK \r\n");
-                printWriter.write("Content-Type: text/html \r\n");
-                printWriter.write("Server: Bot \r\n");
-                // this blank line signals the end of the headers
-                printWriter.write("\r\n");
-                // Send the HTML page
-                printWriter.write("<H1>Hello Sean</H1>");
-                printWriter.flush();
                 clientSocket.close();
             }
-
-            // TODO: server will listen for request, then out a response
 
         } catch (IOException e) {
             e.printStackTrace();

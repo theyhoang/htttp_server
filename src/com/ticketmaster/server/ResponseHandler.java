@@ -14,8 +14,7 @@ public class ResponseHandler {
 
 
     private PrintWriter out;
-    private final String HTTP_VERSION = "HTTP/1.0";
-    private List<String> paths;
+    private final String HTTP_VERSION = "HTTP/1.1";
 
 //    PrintWriter out =
 //        new PrintWriter(clientSocket.getOutputStream(), true);
@@ -28,44 +27,58 @@ public class ResponseHandler {
     // based on protocol
     // construct response
     // return as string or class
-    public String getResponse(Request request) {
-        String response = constructResponseDetails(request).toString();
+    public Response getResponse(Request request) {
+        Response response = constructResponseDetails(request);
         return response;
     }
 
+//    printWriter.write("HTTP/1.0 200 OK \r\n");
+//    printWriter.write("Content-Type: text/html \r\n");
+//    printWriter.write("Server: Bot \r\n");
+//    // this blank line signals the end of the headers
+//    printWriter.write("\r\n");
+//    // Send the HTML page
+//    printWriter.write("<H1>Hello Sean</H1>");
 
-    //    out.println("HTTP/1.0 200 OK");
-    //    out.println("Content-Type: text/html");
-    //    out.println("Server: Bot");
-    //    // this blank line signals the end of the headers
-    //    out.println("");
-    //    // Send the HTML page
-    //    out.println("<H1>Welcome to the Ultra Mini-WebServer</H2>");
     private Response constructResponseDetails(Request request) {
         if (out == null)
             return null;
         Response response = new Response();
-        if (paths.contains(request.getUrl()))
+        if (resourceExistsInPath(request.getUrl()))
             response.setStatusCode(Response.STATUS_CODE_OK);
         else
             response.setStatusCode(Response.STATUS_CODE_NOT_FOUND);
 
         response.setHttpVersion(HTTP_VERSION);
+        // TODO: HEADERS?
+        response.setContentType("text/html");
+        response.setServer("Bot");
+        response.setMessage("<H1>Hello Yen!</H1>");
 
         return response;
     }
 
     // TODO : use actual paths to check for resources
-    public void setPaths(List<String> paths) {
-        this.paths = paths;
+    public boolean resourceExistsInPath(String path) {
+        // TODO: search for existing resource/directory
+        return false;
     }
 
-    public List<String> getPaths() {
-        return paths;
-    }
-
-    // TODO: print out response
-    public void print(Response response) {
-        out.print(response);
+    // TODO: writeResponseToClient out response
+    public void writeResponseToClient(Response response) {
+        //    printWriter.write("HTTP/1.0 200 OK \r\n");
+        //    printWriter.write("Content-Type: text/html \r\n");
+        //    printWriter.write("Server: Bot \r\n");
+        //    // this blank line signals the end of the headers
+        //    printWriter.write("\r\n");
+        //    // Send the HTML page
+        //    printWriter.write("<H1>Hello Sean</H1>");
+        out.write(response.getInitialResponseLine());
+        // out.write(rest of headers)
+        //
+        out.write("\r\n");
+        out.write(response.getMessage());
+        out.flush();
+        out.close();
     }
 }
