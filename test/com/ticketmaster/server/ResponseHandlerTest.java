@@ -36,4 +36,24 @@ public class ResponseHandlerTest {
         Assert.assertNotNull(response);
         Assert.assertEquals(response.getInitialResponseLine(), "HTTP/1.1 200 OK\r\n");
     }
+
+    @Test
+    public void testGetDirectoryPage() {
+        DataOutputStream out = new DataOutputStream(System.out);
+        PrintWriter printWriter = new PrintWriter(out, true);
+        ResponseHandler responseHandler = new ResponseHandler(printWriter);
+        responseHandler.setPublicDirPath("");
+
+        // TODO: get message and check for directory page
+    }
+
+    @Test
+    public void testGetFileContent() {
+        DataOutputStream out = new DataOutputStream(System.out);
+        PrintWriter printWriter = new PrintWriter(out, true);
+        ResponseHandler responseHandler = new ResponseHandler(printWriter);
+        responseHandler.setPublicDirPath("");
+
+        // TODO: get message and check for file content
+    }
 }

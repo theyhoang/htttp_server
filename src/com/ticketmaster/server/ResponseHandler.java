@@ -96,7 +96,6 @@ public class ResponseHandler {
     }
 
     private String getFileContent(String path) {
-
         return "<H1>" + path + " IS A FILE!</H1>";
     }
 
