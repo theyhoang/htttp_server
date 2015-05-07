@@ -23,7 +23,6 @@ public class RequestHandlerTest {
 //    Accept: */*
 //
 
-//
 //    GET /favicon.ico HTTP/1.1
 //    Host: localhost:9090
 //    Connection: keep-alive
@@ -65,7 +64,6 @@ public class RequestHandlerTest {
 
         InputStream stream = new ByteArrayInputStream(testRequestString.getBytes(StandardCharsets.UTF_8));
         RequestHandler requestHandler = new RequestHandler(new BufferedReader( new InputStreamReader(stream)));
-
         Request request = null;
         try {
             request = requestHandler.readRequest();

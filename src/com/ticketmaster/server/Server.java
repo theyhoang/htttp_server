@@ -81,6 +81,8 @@ public class Server extends Thread{
                 PrintWriter printWriter = new PrintWriter(out, true);
                 ResponseHandler responseHandler = new ResponseHandler(printWriter);
                 RequestHandler requestHandler = new RequestHandler(in);
+                // TODO: decouple reading files from response handler
+                // TODO: file management
                 responseHandler.setPublicDirPath(publicDirPath);
 
                 Request request = requestHandler.readRequest();

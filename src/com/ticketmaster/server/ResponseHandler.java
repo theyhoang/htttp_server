@@ -114,6 +114,7 @@ public class ResponseHandler {
         //
         out.write("\r\n");
         out.write(response.getMessage());
+        out.write("\r\n");
         out.flush();
         out.close();
     }

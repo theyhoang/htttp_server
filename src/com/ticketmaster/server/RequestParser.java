@@ -23,8 +23,9 @@ public class RequestParser implements Parser {
 
         String initialRequestLine = inputList.get(0);
         List<String> initialRequest = Arrays.asList(initialRequestLine.split("\\s+"));
-        if (initialRequest.size() != 3)
+        if (initialRequest.size() != 3) {
             return null;
+        }
 
         // first get method
         request.setHttpMethod(initialRequest.get(0));

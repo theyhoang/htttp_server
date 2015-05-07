@@ -6,5 +6,10 @@ package com.ticketmaster.server.model;
 public enum Method {
     GET,
     POST,
+    PUT,
+    HEAD,
+    PATCH,
+    DELETE,
+    OPTIONS,
     NOT_SUPPORTED;
 }
