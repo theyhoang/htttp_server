@@ -80,8 +80,6 @@ public class Server extends Thread{
                 DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
                 ResponseHandler responseHandler = new ResponseHandler(out);
                 RequestHandler requestHandler = new RequestHandler(in);
-                // TODO: decouple reading files from response handler
-                // TODO: file management
                 FileManager fileManager = new FileManager(publicDirPath);
                 responseHandler.setFileManager(fileManager);
 
@@ -92,7 +90,6 @@ public class Server extends Thread{
                 Response response = responseHandler.getResponse(request);
                 responseHandler.writeResponseToClient(response);
 
-                // TODO: write out response to client
                 clientSocket.close();
             }
 

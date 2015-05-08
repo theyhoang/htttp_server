@@ -56,7 +56,6 @@ public class ResponseHandler {
         // TODO: HEADERS?
         response.setServer("Bot");
 
-        // TODO: if file exists
         // TODO: retrieve directory page with links if directory
         // TODO: error handling
 
@@ -67,7 +66,7 @@ public class ResponseHandler {
             } else if (fileManager.isDirectory(request.getUrl())) {
                 response.setMessage(getDirectoryPage(request.getUrl()).getBytes());
             } else {
-                // TODO: ERROR
+                // TODO: ERROR HANDLING
             }
         } else {
             response.setMessage((new String("<H1>" + response.getInitialResponseLine() + "</H1>")).getBytes());
@@ -81,7 +80,6 @@ public class ResponseHandler {
         return "<H1>" + path + " IS A DIRECTORY!</H1>";
     }
 
-    // TODO: writeResponseToClient out response
     public void writeResponseToClient(Response response) {
         //    printWriter.write("HTTP/1.0 200 OK \r\n");
         //    printWriter.write("Content-Type: text/html \r\n");
