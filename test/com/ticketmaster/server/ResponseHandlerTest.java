@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.*;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,6 @@ import java.util.List;
  * Created by yen.hoang on 3/25/15.
  */
 
-// TODO: check tests
 public class ResponseHandlerTest {
     @Test
     public void testConstructResponse() {
@@ -40,9 +40,12 @@ public class ResponseHandlerTest {
     public void testGetDirectoryPage() {
         DataOutputStream out = new DataOutputStream(System.out);
         ResponseHandler responseHandler = new ResponseHandler(out);
-        responseHandler.setFileManager(new FileManager(""));
 
-        // TODO: get message and check for directory page
+        URL url = getClass().getClassLoader().getResource("./");
+        responseHandler.setFileManager(new FileManager(url.getPath()));
+
+
+        // TODO
     }
 
     @Test
@@ -51,6 +54,42 @@ public class ResponseHandlerTest {
         ResponseHandler responseHandler = new ResponseHandler(out);
         responseHandler.setFileManager(new FileManager(""));
 
-        // TODO: get message and check for file content
+        URL url = getClass().getClassLoader().getResource("./");
+        responseHandler.setFileManager(new FileManager(url.getPath()));
+
+        Request request = new Request();
+        request.setHttpVersion("HTTP/1.1");
+        request.setHttpMethod(Method.GET.name());
+        request.setUrl("/file1");
+
+        Assert.assertNotNull(request);
+        Response response = responseHandler.getResponse(request);
+
+        Assert.assertNotNull(response);
+        Assert.assertEquals(response.getInitialResponseLine(), "HTTP/1.1 200 OK\r\n");
+        Assert.assertNotNull(response.getMessage());
+    }
+
+    @Test
+    public void testGetJpegFile() {
+        DataOutputStream out = new DataOutputStream(System.out);
+        ResponseHandler responseHandler = new ResponseHandler(out);
+        responseHandler.setFileManager(new FileManager(""));
+
+        URL url = getClass().getClassLoader().getResource("./");
+        responseHandler.setFileManager(new FileManager(url.getPath()));
+
+        Request request = new Request();
+        request.setHttpVersion("HTTP/1.1");
+        request.setHttpMethod(Method.GET.name());
+        request.setUrl("/image.jpeg");
+
+        Assert.assertNotNull(request);
+        Response response = responseHandler.getResponse(request);
+
+        Assert.assertNotNull(response);
+        Assert.assertEquals(response.getInitialResponseLine(), "HTTP/1.1 200 OK\r\n");
+        Assert.assertNotNull(response.getMessage());
+        Assert.assertEquals("image/jpeg", response.getContentType());
     }
 }
