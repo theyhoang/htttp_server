@@ -71,7 +71,7 @@ public class ResponseHandlerTest {
     }
 
     @Test
-    public void testGetJpegFile() {
+    public void testGetImageFiles() {
         DataOutputStream out = new DataOutputStream(System.out);
         ResponseHandler responseHandler = new ResponseHandler(out);
         responseHandler.setFileManager(new FileManager(""));
@@ -91,5 +91,31 @@ public class ResponseHandlerTest {
         Assert.assertEquals(response.getInitialResponseLine(), "HTTP/1.1 200 OK\r\n");
         Assert.assertNotNull(response.getMessage());
         Assert.assertEquals("image/jpeg", response.getContentType());
+
+        request = new Request();
+        request.setHttpVersion("HTTP/1.1");
+        request.setHttpMethod(Method.GET.name());
+        request.setUrl("/image.gif");
+
+        Assert.assertNotNull(request);
+        response = responseHandler.getResponse(request);
+
+        Assert.assertNotNull(response);
+        Assert.assertEquals(response.getInitialResponseLine(), "HTTP/1.1 200 OK\r\n");
+        Assert.assertNotNull(response.getMessage());
+        Assert.assertEquals("image/gif", response.getContentType());
+
+        request = new Request();
+        request.setHttpVersion("HTTP/1.1");
+        request.setHttpMethod(Method.GET.name());
+        request.setUrl("/image.png");
+
+        Assert.assertNotNull(request);
+        response = responseHandler.getResponse(request);
+
+        Assert.assertNotNull(response);
+        Assert.assertEquals(response.getInitialResponseLine(), "HTTP/1.1 200 OK\r\n");
+        Assert.assertNotNull(response.getMessage());
+        Assert.assertEquals("image/png", response.getContentType());
     }
 }
