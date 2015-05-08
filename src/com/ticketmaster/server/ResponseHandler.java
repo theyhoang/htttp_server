@@ -1,17 +1,13 @@
 package com.ticketmaster.server;
 
-import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
 import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
-import org.apache.commons.codec.binary.Base64;
 
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 
 /**
  * Created by yen.hoang on 3/25/15.
@@ -21,7 +17,7 @@ public class ResponseHandler {
 
     private DataOutputStream out;
     private final String HTTP_VERSION = "HTTP/1.1";
-    private final String CLRF = "\r\n";
+    private final String CRLF = "\r\n";
 
     private String publicDirPath;
 //    PrintWriter out =
@@ -137,9 +133,9 @@ public class ResponseHandler {
             out.write(response.getInitialResponseLine().getBytes());
             // TODO : out.write(rest of headers)
             out.write((new String("Content-Type: " + response.getContentType() + "\r\n")).getBytes());
-            out.write(CLRF.getBytes());
+            out.write(CRLF.getBytes());
             out.write(response.getMessage());
-            out.write(CLRF.getBytes());
+            out.write(CRLF.getBytes());
             out.flush();
             out.close();
         } catch (IOException e) {
