@@ -20,7 +20,7 @@ public class Response {
     private String headers;
     private String contentType;
     private String server;
-    private String message;
+    private byte[] message;
     private String httpVersion;
     private String reasonPhrase;
 
@@ -56,11 +56,11 @@ public class Response {
         this.server = server;
     }
 
-    public String getMessage() {
+    public byte[] getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(byte[] message) {
         this.message = message;
     }
 

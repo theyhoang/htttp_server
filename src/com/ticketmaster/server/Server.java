@@ -77,9 +77,10 @@ public class Server extends Thread{
                 clientSocket = serverSocket.accept();
 
                 BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()) );
+                // TODO: use DataOutputStream instead of printWriter
                 DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
-                PrintWriter printWriter = new PrintWriter(out, true);
-                ResponseHandler responseHandler = new ResponseHandler(printWriter);
+//                PrintWriter printWriter = new PrintWriter(out, true);
+                ResponseHandler responseHandler = new ResponseHandler(out);
                 RequestHandler requestHandler = new RequestHandler(in);
                 // TODO: decouple reading files from response handler
                 // TODO: file management

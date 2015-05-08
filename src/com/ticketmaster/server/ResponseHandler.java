@@ -1,10 +1,15 @@
 package com.ticketmaster.server;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
+
 import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
+import org.apache.commons.codec.binary.Base64;
 
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -14,14 +19,15 @@ import java.util.List;
 public class ResponseHandler {
 
 
-    private PrintWriter out;
+    private DataOutputStream out;
     private final String HTTP_VERSION = "HTTP/1.1";
+    private final String CLRF = "\r\n";
 
     private String publicDirPath;
 //    PrintWriter out =
 //        new PrintWriter(clientSocket.getOutputStream(), true);
 
-    public ResponseHandler(PrintWriter out) {
+    public ResponseHandler(DataOutputStream out) {
         this.out = out;
     }
 
@@ -54,7 +60,6 @@ public class ResponseHandler {
 
         response.setHttpVersion(HTTP_VERSION);
         // TODO: HEADERS?
-        response.setContentType("text/html");
         response.setServer("Bot");
 
         // TODO: if file exists
@@ -62,14 +67,15 @@ public class ResponseHandler {
         // TODO: retrieve file contents if file
         if (response.getStatusCode() == (Response.STATUS_CODE_OK)) {
             if (isFile(request.getUrl())) {
+                response.setContentType(getFileContentType(request.getUrl()));
                 response.setMessage(getFileContent(request.getUrl()));
             } else if (isDirectory(request.getUrl())) {
-                response.setMessage(getDirectoryPage(request.getUrl()));
+                response.setMessage(getDirectoryPage(request.getUrl()).getBytes());
             } else {
                 // TODO: ERROR
             }
         } else {
-            response.setMessage("<H1>" + response.getInitialResponseLine() + "</H1>");
+            response.setMessage((new String("<H1>" + response.getInitialResponseLine() + "</H1>")).getBytes());
         }
 
         return response;
@@ -95,10 +101,28 @@ public class ResponseHandler {
         return "<H1>" + path + " IS A DIRECTORY!</H1>";
     }
 
-    private String getFileContent(String path) {
-        return "<H1>" + path + " IS A FILE!</H1>";
+    private String getFileContentType(String path) {
+
+        String contentType = "text/html";
+        File file = new File(publicDirPath + path);
+        // TODO: abstract to method for MIME Types
+        if (file.getName().endsWith(".jpeg")) {
+            contentType = "image/jpeg";
+        }
+
+        return contentType;
     }
 
+    private byte[] getFileContent(String path) {
+        byte[] content = null;
+        try {
+            File file = new File(publicDirPath + path);
+            content = Files.toByteArray(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return content;
+    }
 
     // TODO: writeResponseToClient out response
     public void writeResponseToClient(Response response) {
@@ -109,14 +133,19 @@ public class ResponseHandler {
         //    printWriter.write("\r\n");
         //    // Send the HTML page
         //    printWriter.write("<H1>Hello Sean</H1>");
-        out.write(response.getInitialResponseLine());
-        // TODO : out.write(rest of headers)
-        //
-        out.write("\r\n");
-        out.write(response.getMessage());
-        out.write("\r\n");
-        out.flush();
-        out.close();
+        try {
+            out.write(response.getInitialResponseLine().getBytes());
+            // TODO : out.write(rest of headers)
+            out.write((new String("Content-Type: " + response.getContentType() + "\r\n")).getBytes());
+            out.write(CLRF.getBytes());
+            out.write(response.getMessage());
+            out.write(CLRF.getBytes());
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void setPublicDirPath(String publicDirPath) {

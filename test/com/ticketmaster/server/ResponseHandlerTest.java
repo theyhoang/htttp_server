@@ -21,8 +21,7 @@ public class ResponseHandlerTest {
     public void testConstructResponse() {
 
         DataOutputStream out = new DataOutputStream(System.out);
-        PrintWriter printWriter = new PrintWriter(out, true);
-        ResponseHandler responseHandler = new ResponseHandler(printWriter);
+        ResponseHandler responseHandler = new ResponseHandler(out);
         responseHandler.setPublicDirPath("");
 
         Request request = new Request();
@@ -40,8 +39,7 @@ public class ResponseHandlerTest {
     @Test
     public void testGetDirectoryPage() {
         DataOutputStream out = new DataOutputStream(System.out);
-        PrintWriter printWriter = new PrintWriter(out, true);
-        ResponseHandler responseHandler = new ResponseHandler(printWriter);
+        ResponseHandler responseHandler = new ResponseHandler(out);
         responseHandler.setPublicDirPath("");
 
         // TODO: get message and check for directory page
@@ -50,8 +48,7 @@ public class ResponseHandlerTest {
     @Test
     public void testGetFileContent() {
         DataOutputStream out = new DataOutputStream(System.out);
-        PrintWriter printWriter = new PrintWriter(out, true);
-        ResponseHandler responseHandler = new ResponseHandler(printWriter);
+        ResponseHandler responseHandler = new ResponseHandler(out);
         responseHandler.setPublicDirPath("");
 
         // TODO: get message and check for file content
