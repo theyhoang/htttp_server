@@ -19,9 +19,7 @@ public class ResponseHandler {
     private final String HTTP_VERSION = "HTTP/1.1";
     private final String CRLF = "\r\n";
 
-    private String publicDirPath;
-//    PrintWriter out =
-//        new PrintWriter(clientSocket.getOutputStream(), true);
+    private FileManager fileManager;
 
     public ResponseHandler(DataOutputStream out) {
         this.out = out;
@@ -48,7 +46,7 @@ public class ResponseHandler {
         if (out == null)
             return null;
         Response response = new Response();
-        if (resourceExistsInPath(request.getUrl()))
+        if (fileManager.resourceExistsInPath(request.getUrl()))
             response.setStatusCode(Response.STATUS_CODE_OK);
         else {
             response.setStatusCode(Response.STATUS_CODE_NOT_FOUND);
@@ -60,12 +58,13 @@ public class ResponseHandler {
 
         // TODO: if file exists
         // TODO: retrieve directory page with links if directory
-        // TODO: retrieve file contents if file
+        // TODO: error handling
+
         if (response.getStatusCode() == (Response.STATUS_CODE_OK)) {
-            if (isFile(request.getUrl())) {
-                response.setContentType(getFileContentType(request.getUrl()));
-                response.setMessage(getFileContent(request.getUrl()));
-            } else if (isDirectory(request.getUrl())) {
+            if (fileManager.isFile(request.getUrl())) {
+                response.setContentType(fileManager.getFileContentType(request.getUrl()));
+                response.setMessage(fileManager.getFileContent(request.getUrl()));
+            } else if (fileManager.isDirectory(request.getUrl())) {
                 response.setMessage(getDirectoryPage(request.getUrl()).getBytes());
             } else {
                 // TODO: ERROR
@@ -77,47 +76,9 @@ public class ResponseHandler {
         return response;
     }
 
-    private boolean resourceExistsInPath(String path) {
-        File file = new File(publicDirPath + path);
-        return file.exists();
-    }
-
-    private boolean isFile(String path) {
-        File file = new File(publicDirPath + path);
-        return file.isFile();
-    }
-
-    private boolean isDirectory(String path) {
-        File file = new File(publicDirPath + path);
-        return file.isDirectory();
-    }
-
     private String getDirectoryPage(String path) {
 
         return "<H1>" + path + " IS A DIRECTORY!</H1>";
-    }
-
-    private String getFileContentType(String path) {
-
-        String contentType = "text/html";
-        File file = new File(publicDirPath + path);
-        // TODO: abstract to method for MIME Types
-        if (file.getName().endsWith(".jpeg")) {
-            contentType = "image/jpeg";
-        }
-
-        return contentType;
-    }
-
-    private byte[] getFileContent(String path) {
-        byte[] content = null;
-        try {
-            File file = new File(publicDirPath + path);
-            content = Files.toByteArray(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return content;
     }
 
     // TODO: writeResponseToClient out response
@@ -144,7 +105,7 @@ public class ResponseHandler {
 
     }
 
-    public void setPublicDirPath(String publicDirPath) {
-        this.publicDirPath = publicDirPath;
+    public void setFileManager(FileManager fileManager) {
+        this.fileManager = fileManager;
     }
 }

@@ -16,6 +16,8 @@ public class Response {
     public static final int STATUS_CODE_INTERNAL_SERVER_ERROR = 500;
     public static final int STATUS_CODE_NOT_IMPLEMENTED = 501;
 
+    private final String CRLF = "\r\n";
+
     private int statusCode;
     private String headers;
     private String contentType;
@@ -105,7 +107,7 @@ public class Response {
         response = response.concat(httpVersion);
         response = response.concat(" " + Integer.toString(statusCode));
         response = response.concat(" " + reasonPhrase);
-        response = response.concat("\r\n");
+        response = response.concat(CRLF);
 
         return response;
     }

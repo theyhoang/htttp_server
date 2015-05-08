@@ -22,7 +22,7 @@ public class ResponseHandlerTest {
 
         DataOutputStream out = new DataOutputStream(System.out);
         ResponseHandler responseHandler = new ResponseHandler(out);
-        responseHandler.setPublicDirPath("");
+        responseHandler.setFileManager(new FileManager(""));
 
         Request request = new Request();
         request.setHttpVersion("HTTP/1.1");
@@ -40,7 +40,7 @@ public class ResponseHandlerTest {
     public void testGetDirectoryPage() {
         DataOutputStream out = new DataOutputStream(System.out);
         ResponseHandler responseHandler = new ResponseHandler(out);
-        responseHandler.setPublicDirPath("");
+        responseHandler.setFileManager(new FileManager(""));
 
         // TODO: get message and check for directory page
     }
@@ -49,7 +49,7 @@ public class ResponseHandlerTest {
     public void testGetFileContent() {
         DataOutputStream out = new DataOutputStream(System.out);
         ResponseHandler responseHandler = new ResponseHandler(out);
-        responseHandler.setPublicDirPath("");
+        responseHandler.setFileManager(new FileManager(""));
 
         // TODO: get message and check for file content
     }
