@@ -11,6 +11,7 @@ public class Request {
 //    URL – Page to access
 //    Form Parameters – similar to arguments in a java method, for example user,password details from login page.
 
+    // TODO: use standard terminology: message = body, map for headers
     // components of a request
     private Method httpMethod;
     private String url;
@@ -24,6 +25,7 @@ public class Request {
     }
 
     public void setHttpMethod(String httpMethod) {
+        // TODO: clean this up with enum constructor to compare
         if (httpMethod.startsWith(Method.GET.name())) {
             this.httpMethod = Method.GET;
         } else if (httpMethod.startsWith(Method.POST.name())) {

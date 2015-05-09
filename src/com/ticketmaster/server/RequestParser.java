@@ -21,6 +21,7 @@ public class RequestParser implements Parser {
     public Request parse(List<String> inputList) throws IOException {
         Request request = new Request();
 
+        // TODO: put inside a method for readability
         String initialRequestLine = inputList.get(0);
         List<String> initialRequest = Arrays.asList(initialRequestLine.split("\\s+"));
         if (initialRequest.size() != 3) {
@@ -29,7 +30,9 @@ public class RequestParser implements Parser {
 
         // first get method
         request.setHttpMethod(initialRequest.get(0));
+        // TODO: add method to validate?
         if (request.getHttpMethod() == Method.NOT_SUPPORTED) { // not supported
+            // TODO: throw exception
             return null;
         }
 

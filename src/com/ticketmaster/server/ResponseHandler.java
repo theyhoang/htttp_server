@@ -12,6 +12,8 @@ import java.io.IOException;
 /**
  * Created by yen.hoang on 3/25/15.
  */
+
+// TODO: to only handle response, separate other responsibilities to downstream classes
 public class ResponseHandler {
 
 

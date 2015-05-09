@@ -18,6 +18,7 @@ public class Response {
 
     private final String CRLF = "\r\n";
 
+    // TODO: use map for headers, message to body
     private int statusCode;
     private String headers;
     private String contentType;
