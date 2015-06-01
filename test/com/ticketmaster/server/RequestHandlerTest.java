@@ -45,11 +45,8 @@ public class RequestHandlerTest {
         RequestHandler requestHandler = new RequestHandler(new BufferedReader( new InputStreamReader(stream)));
 
         List<String> inputList = new ArrayList<>();
-        try {
-            inputList = requestHandler.readInput();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        inputList = requestHandler.readInput();
+
         Assert.assertNotEquals(inputList.size(), 0);
     }
 

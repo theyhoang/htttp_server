@@ -4,8 +4,6 @@ import com.ticketmaster.server.model.Request;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,33 +11,15 @@ import java.util.List;
  */
 public class RequestHandler {
 
-    // TODO: implement protocol?
-
-    private BufferedReader input;
+    private InputReader inputReader;
 
     public RequestHandler(BufferedReader input) {
-        this.input = input;
+        this.inputReader = new InputReader(input);
     }
 
-    public void start() throws IOException {
-        String userInput = null;
-        while ((userInput = input.readLine()) != null) {
-            //                out.println(userInput);
-            System.out.println("echo: " + input.readLine());
-        }
-    }
 
-    public List<String> readInput() throws IOException {
-        List<String> inputList = new ArrayList<>();
-        String userInput;
-        while ((userInput = input.readLine()) != null) {
-            System.out.println(userInput);
-            inputList.add(userInput);
-            if (userInput.isEmpty()) {
-                break;
-            }
-        }
-        return inputList;
+    public List<String> readInput() {
+        return inputReader.readInput();
     }
 
     public Request readRequest() throws IOException {

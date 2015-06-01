@@ -1,13 +1,9 @@
 package com.ticketmaster.server;
 
-import com.google.common.io.Files;
-
 import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
 
 import java.io.DataOutputStream;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by yen.hoang on 3/25/15.
@@ -16,15 +12,13 @@ import java.io.IOException;
 // TODO: to only handle response, separate other responsibilities to downstream classes
 public class ResponseHandler {
 
-
-    private DataOutputStream out;
     private final String HTTP_VERSION = "HTTP/1.1";
-    private final String CRLF = "\r\n";
 
     private FileManager fileManager;
+    private OutputWriter outputWriter;
 
     public ResponseHandler(DataOutputStream out) {
-        this.out = out;
+        outputWriter = new OutputWriter(out);
     }
 
     // construct response
@@ -45,7 +39,7 @@ public class ResponseHandler {
 //    printWriter.write("<H1>Hello Sean</H1>");
 
     private Response constructResponseDetails(Request request) {
-        if (out == null)
+        if (outputWriter == null)
             return null;
         Response response = new Response();
         if (fileManager.resourceExistsInPath(request.getUrl()))
@@ -90,19 +84,7 @@ public class ResponseHandler {
         //    printWriter.write("\r\n");
         //    // Send the HTML page
         //    printWriter.write("<H1>Hello Sean</H1>");
-        try {
-            out.write(response.getInitialResponseLine().getBytes());
-            // TODO : out.write(rest of headers)
-            out.write((new String("Content-Type: " + response.getContentType() + "\r\n")).getBytes());
-            out.write(CRLF.getBytes());
-            out.write(response.getMessage());
-            out.write(CRLF.getBytes());
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        outputWriter.outputResponse(response);
     }
 
     public void setFileManager(FileManager fileManager) {
