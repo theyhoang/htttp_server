@@ -85,8 +85,7 @@ public class Server extends Thread{
 
                 Request request = requestHandler.readRequest();
 
-//                    // TODO: process request
-//                    // TODO: read headers, depending on method act accordingly, return
+                // TODO: based on type of request, have factory generate appropriate response handler
                 Response response = responseHandler.getResponse(request);
                 responseHandler.writeResponseToClient(response);
 

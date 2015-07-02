@@ -1,3 +1,11 @@
+How to build and run java server:
+mvn clean package
+cd into target directory where packaged jar is contained
+java -jar com.ticketmaster-0.0.1-SNAPSHOT.jar -p 9000 -d /Users/yen.hoang/Projects/Apprenticeship/cob_spec/public/
+-p indicates port
+-d indicated directory of public folder
+
+
 How to use this project:
 
 1. Generate the Step Definition stubs in Java. You can either use your favorite plugin IDE or just use the Cucumber JVM facilities:

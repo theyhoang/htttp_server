@@ -38,6 +38,7 @@ public class ResponseHandler {
 //    // Send the HTML page
 //    printWriter.write("<H1>Hello Sean</H1>");
 
+    // TODO: refactor out responsibilities
     private Response constructResponseDetails(Request request) {
         if (outputWriter == null)
             return null;

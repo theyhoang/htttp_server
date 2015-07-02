@@ -36,6 +36,7 @@ public class FileManager {
         String contentType = "text/html";
         File file = new File(publicDirPath + path);
         // TODO: abstract to method for MIME Types
+        // TODO: look into library that can retrieve MIME type
         if (file.getName().endsWith(".jpeg")) {
             contentType = "image/jpeg";
         } else if (file.getName().endsWith(".gif")) {
