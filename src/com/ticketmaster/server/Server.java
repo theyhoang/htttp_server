@@ -83,6 +83,9 @@ public class Server extends Thread{
                 BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()) );
                 InputReader inputReader = new InputReader(in);
                 List<String> input = inputReader.readInput();
+                if (input.isEmpty()) {
+                    continue;
+                }
 
                 RequestHandler requestHandler = new RequestHandler();
 
