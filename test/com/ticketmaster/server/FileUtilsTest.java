@@ -9,7 +9,7 @@ import java.net.URL;
 /**
  * Created by yen.hoang on 5/8/15.
  */
-public class FileManagerTest {
+public class FileUtilsTest {
 
     @Before
     public void setUp() {
