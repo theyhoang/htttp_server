@@ -76,14 +76,19 @@ public class Server extends Thread{
             while (true) {
                 clientSocket = serverSocket.accept();
 
-                BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()) );
                 DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
                 ResponseHandler responseHandler = new ResponseHandler(out);
-                RequestHandler requestHandler = new RequestHandler(in);
+
+                BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()) );
+                InputReader inputReader = new InputReader(in);
+                List<String> input = inputReader.readInput();
+
+                RequestHandler requestHandler = new RequestHandler();
+
+                Request request = requestHandler.readRequest(input);
+
                 FileManager fileManager = new FileManager(publicDirPath);
                 responseHandler.setFileManager(fileManager);
-
-                Request request = requestHandler.readRequest();
 
                 // TODO: based on type of request, have factory generate appropriate response handler
                 Response response = responseHandler.getResponse(request);

@@ -33,7 +33,7 @@ public class RequestHandlerTest {
 
 
     @Test
-    public void testReadInput() {
+    public void testParseForMethodTypeGet() throws IOException {
 
         String testRequestString = "GET / HTTP/1.1\r\n";
         testRequestString += "User-Agent: curl/7.41.0\r\n";
@@ -42,16 +42,35 @@ public class RequestHandlerTest {
 
 
         InputStream stream = new ByteArrayInputStream(testRequestString.getBytes(StandardCharsets.UTF_8));
-        RequestHandler requestHandler = new RequestHandler(new BufferedReader( new InputStreamReader(stream)));
+        InputReader inputReader = new InputReader(new BufferedReader( new InputStreamReader(stream)));
+        List<String> inputList = inputReader.readInput();
+        RequestHandler requestHandler = new RequestHandler();
+        Method methodType = requestHandler.parseForMethodType(inputList);
 
-        List<String> inputList = new ArrayList<>();
-        inputList = requestHandler.readInput();
 
-        Assert.assertNotEquals(inputList.size(), 0);
+        Assert.assertEquals(Method.GET, methodType);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testParseForMethodTypeInvalidType() throws IOException {
+        String testRequestString = "BAD / HTTP/1.1\r\n";
+        testRequestString += "User-Agent: curl/7.41.0\r\n";
+        testRequestString += "Host: localhost:9090\r\n";
+        testRequestString += "Accept: */*\r\n";
+
+
+        InputStream stream = new ByteArrayInputStream(testRequestString.getBytes(StandardCharsets.UTF_8));
+        InputReader inputReader = new InputReader(new BufferedReader( new InputStreamReader(stream)));
+        List<String> inputList = inputReader.readInput();
+        RequestHandler requestHandler = new RequestHandler();
+        Method methodType = requestHandler.parseForMethodType(inputList);
+    }
+
+    // TODO: add more test scenarios
+
+
     @Test
-    public void testReadRequest() {
+    public void testReadRequest() throws IOException {
         String testRequestString = "GET / HTTP/1.1\r\n";
         testRequestString += "User-Agent: curl/7.41.0\r\n";
         testRequestString += "Host: localhost:9090\r\n";
@@ -60,13 +79,10 @@ public class RequestHandlerTest {
 
 
         InputStream stream = new ByteArrayInputStream(testRequestString.getBytes(StandardCharsets.UTF_8));
-        RequestHandler requestHandler = new RequestHandler(new BufferedReader( new InputStreamReader(stream)));
-        Request request = null;
-        try {
-            request = requestHandler.readRequest();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        InputReader inputReader = new InputReader(new BufferedReader( new InputStreamReader(stream)));
+        RequestHandler requestHandler = new RequestHandler();
+        Request request = requestHandler.readRequest(inputReader.readInput());
+
 
         Assert.assertNotNull(request);
         Assert.assertEquals(request.getHttpMethod(), Method.GET);
@@ -83,14 +99,10 @@ public class RequestHandlerTest {
         testRequestString2 += "\r\n";
 
         stream = new ByteArrayInputStream(testRequestString2.getBytes(StandardCharsets.UTF_8));
-        requestHandler = new RequestHandler(new BufferedReader( new InputStreamReader(stream)));
+        inputReader = new InputReader(new BufferedReader( new InputStreamReader(stream)));
+        requestHandler = new RequestHandler();
+        Request request2 = requestHandler.readRequest(inputReader.readInput());
 
-        Request request2 = null;
-        try {
-            request2 = requestHandler.readRequest();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         Assert.assertNotNull(request2);
         Assert.assertEquals(request2.getHttpMethod(), Method.GET);

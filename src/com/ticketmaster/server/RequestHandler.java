@@ -1,9 +1,13 @@
 package com.ticketmaster.server;
 
+import com.ticketmaster.server.model.Method;
 import com.ticketmaster.server.model.Request;
+import com.ticketmaster.server.request.GetRequestFactory;
+import com.ticketmaster.server.request.RequestFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -11,38 +15,49 @@ import java.util.List;
  */
 public class RequestHandler {
 
-    private InputReader inputReader;
-
-    public RequestHandler(BufferedReader input) {
-        this.inputReader = new InputReader(input);
-    }
-
-
-    public List<String> readInput() {
-        return inputReader.readInput();
-    }
-
-    public Request readRequest() throws IOException {
-        List<String> inputList = readInput();
-
+    public Request readRequest(List<String> inputList) throws IOException {
         // TODO: process request
         // TODO: read headers, depending on method act accordingly, return
+        Method methodType = parseForMethodType(inputList);
 
-        // parse string
-        // create new request object
-        // return request as string or as class
+        // get requestfactory based on method type
+        RequestFactory requestFactory = null;
+        switch(methodType) {
+            case GET:
+                requestFactory = new GetRequestFactory();
+                break;
+            case PUT:
+                break;
+            case POST:
+                break;
+            case PATCH:
+                break;
+            case DELETE:
+                break;
+            case OPTIONS:
+                break;
+            case HEAD:
+                break;
+            default:
+                // TODO: should throw exception
+                break;
+        }
 
-        Request request = parseForRequestDetails(inputList);
-
+        // TODO: generate request with requestfactory type and return
+        Request request = requestFactory.generateRequest(inputList);
 
         return request;
     }
 
+    public Method parseForMethodType(List<String> inputList) throws IOException, IllegalArgumentException {
+        String initialRequestLine = inputList.get(0);
+        List<String> initialRequest = Arrays.asList(initialRequestLine.split("\\s+"));
+        if (initialRequest.size() != 3) {
+            // TODO: error handling throw exception?
+            return null;
+        }
 
-    private Request parseForRequestDetails(List<String> inputList) throws IOException{
-        RequestParser requestParser = new RequestParser();
-        Request request = requestParser.parse(inputList);
-
-        return request;
+        Method methodType = Method.valueOf(initialRequest.get(0));
+        return methodType;
     }
 }

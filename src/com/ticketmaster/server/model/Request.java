@@ -24,25 +24,8 @@ public class Request {
         return httpMethod;
     }
 
-    public void setHttpMethod(String httpMethod) {
-        // TODO: clean this up with enum constructor to compare
-        if (httpMethod.startsWith(Method.GET.name())) {
-            this.httpMethod = Method.GET;
-        } else if (httpMethod.startsWith(Method.POST.name())) {
-            this.httpMethod = Method.POST;
-        } else if (httpMethod.startsWith(Method.PUT.name())) {
-            this.httpMethod = Method.PUT;
-        } else if (httpMethod.startsWith(Method.HEAD.name())) {
-            this.httpMethod = Method.HEAD;
-        } else if (httpMethod.startsWith(Method.PATCH.name())) {
-            this.httpMethod = Method.PATCH;
-        } else if (httpMethod.startsWith(Method.DELETE.name())) {
-            this.httpMethod = Method.DELETE;
-        } else if (httpMethod.startsWith(Method.OPTIONS.name())) {
-            this.httpMethod = Method.OPTIONS;
-        } else {
-            this.httpMethod = Method.NOT_SUPPORTED;
-        }
+    public void setHttpMethod(Method methodType) {
+        this.httpMethod = methodType;
     }
 
     public String getUrl() {

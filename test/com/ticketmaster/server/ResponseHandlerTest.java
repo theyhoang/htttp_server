@@ -26,7 +26,7 @@ public class ResponseHandlerTest {
 
         Request request = new Request();
         request.setHttpVersion("HTTP/1.1");
-        request.setHttpMethod(Method.GET.name());
+        request.setHttpMethod(Method.GET);
         request.setUrl("/");
 
         Assert.assertNotNull(request);
@@ -59,7 +59,7 @@ public class ResponseHandlerTest {
 
         Request request = new Request();
         request.setHttpVersion("HTTP/1.1");
-        request.setHttpMethod(Method.GET.name());
+        request.setHttpMethod(Method.GET);
         request.setUrl("/file1");
 
         Assert.assertNotNull(request);
@@ -81,7 +81,7 @@ public class ResponseHandlerTest {
 
         Request request = new Request();
         request.setHttpVersion("HTTP/1.1");
-        request.setHttpMethod(Method.GET.name());
+        request.setHttpMethod(Method.GET);
         request.setUrl("/image.jpeg");
 
         Assert.assertNotNull(request);
@@ -94,7 +94,7 @@ public class ResponseHandlerTest {
 
         request = new Request();
         request.setHttpVersion("HTTP/1.1");
-        request.setHttpMethod(Method.GET.name());
+        request.setHttpMethod(Method.GET);
         request.setUrl("/image.gif");
 
         Assert.assertNotNull(request);
@@ -107,7 +107,7 @@ public class ResponseHandlerTest {
 
         request = new Request();
         request.setHttpVersion("HTTP/1.1");
-        request.setHttpMethod(Method.GET.name());
+        request.setHttpMethod(Method.GET);
         request.setUrl("/image.png");
 
         Assert.assertNotNull(request);

@@ -28,13 +28,6 @@ public class RequestParser implements Parser {
             return null;
         }
 
-        // first get method
-        request.setHttpMethod(initialRequest.get(0));
-        // TODO: add method to validate?
-        if (request.getHttpMethod() == Method.NOT_SUPPORTED) { // not supported
-            // TODO: throw exception
-            return null;
-        }
 
         // then get path
         String path = initialRequest.get(1);
