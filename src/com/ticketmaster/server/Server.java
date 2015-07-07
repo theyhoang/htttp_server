@@ -4,6 +4,7 @@ import com.ticketmaster.server.input.InputReader;
 import com.ticketmaster.server.model.Method;
 import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
+import com.ticketmaster.server.output.OutputWriter;
 import com.ticketmaster.server.request.RequestHandler;
 import com.ticketmaster.server.response.ResponseHandler;
 import org.kohsuke.args4j.Argument;
@@ -89,11 +90,12 @@ public class Server extends Thread{
 
                 FileUtils.publicDirPath = publicDirPath;
                 DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
-                ResponseHandler responseHandler = new ResponseHandler(out);
+                ResponseHandler responseHandler = new ResponseHandler();
+                OutputWriter outputWriter = new OutputWriter(out);
 
                 // TODO: based on type of request, have factory generate appropriate response handler
                 Response response = responseHandler.getResponse(request);
-                responseHandler.writeResponseToClient(response);
+                outputWriter.outputResponse(response);
 
                 clientSocket.close();
             }

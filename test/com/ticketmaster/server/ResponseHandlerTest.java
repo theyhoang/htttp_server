@@ -18,8 +18,7 @@ public class ResponseHandlerTest {
     @Test
     public void testConstructResponse() {
 
-        DataOutputStream out = new DataOutputStream(System.out);
-        ResponseHandler responseHandler = new ResponseHandler(out);
+        ResponseHandler responseHandler = new ResponseHandler();
         FileUtils.publicDirPath = "";
 
         Request request = new Request();
@@ -36,8 +35,7 @@ public class ResponseHandlerTest {
 
     @Test
     public void testGetDirectoryPage() {
-        DataOutputStream out = new DataOutputStream(System.out);
-        ResponseHandler responseHandler = new ResponseHandler(out);
+        ResponseHandler responseHandler = new ResponseHandler();
 
         URL url = getClass().getClassLoader().getResource("./");
         FileUtils.publicDirPath = url.getPath();
@@ -48,8 +46,7 @@ public class ResponseHandlerTest {
 
     @Test
     public void testGetFileContent() {
-        DataOutputStream out = new DataOutputStream(System.out);
-        ResponseHandler responseHandler = new ResponseHandler(out);
+        ResponseHandler responseHandler = new ResponseHandler();
         FileUtils.publicDirPath = "";
 
         URL url = getClass().getClassLoader().getResource("./");
@@ -70,8 +67,7 @@ public class ResponseHandlerTest {
 
     @Test
     public void testGetImageFiles() {
-        DataOutputStream out = new DataOutputStream(System.out);
-        ResponseHandler responseHandler = new ResponseHandler(out);
+        ResponseHandler responseHandler = new ResponseHandler();
         FileUtils.publicDirPath = "";
 
         URL url = getClass().getClassLoader().getResource("./");
