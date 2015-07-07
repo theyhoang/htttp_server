@@ -79,9 +79,6 @@ public class Server extends Thread{
             while (true) {
                 clientSocket = serverSocket.accept();
 
-                DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
-                ResponseHandler responseHandler = new ResponseHandler(out);
-
                 BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()) );
                 InputReader inputReader = new InputReader(in);
                 List<String> input = inputReader.readInput();
@@ -90,8 +87,9 @@ public class Server extends Thread{
 
                 Request request = requestHandler.readRequest(input);
 
-                FileUtils fileUtils = new FileUtils(publicDirPath);
-                responseHandler.setFileUtils(fileUtils);
+                FileUtils.publicDirPath = publicDirPath;
+                DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
+                ResponseHandler responseHandler = new ResponseHandler(out);
 
                 // TODO: based on type of request, have factory generate appropriate response handler
                 Response response = responseHandler.getResponse(request);

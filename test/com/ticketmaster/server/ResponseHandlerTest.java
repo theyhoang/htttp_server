@@ -20,7 +20,7 @@ public class ResponseHandlerTest {
 
         DataOutputStream out = new DataOutputStream(System.out);
         ResponseHandler responseHandler = new ResponseHandler(out);
-        responseHandler.setFileUtils(new FileUtils(""));
+        FileUtils.publicDirPath = "";
 
         Request request = new Request();
         request.setHttpVersion("HTTP/1.1");
@@ -40,7 +40,7 @@ public class ResponseHandlerTest {
         ResponseHandler responseHandler = new ResponseHandler(out);
 
         URL url = getClass().getClassLoader().getResource("./");
-        responseHandler.setFileUtils(new FileUtils(url.getPath()));
+        FileUtils.publicDirPath = url.getPath();
 
 
         // TODO
@@ -50,10 +50,10 @@ public class ResponseHandlerTest {
     public void testGetFileContent() {
         DataOutputStream out = new DataOutputStream(System.out);
         ResponseHandler responseHandler = new ResponseHandler(out);
-        responseHandler.setFileUtils(new FileUtils(""));
+        FileUtils.publicDirPath = "";
 
         URL url = getClass().getClassLoader().getResource("./");
-        responseHandler.setFileUtils(new FileUtils(url.getPath()));
+        FileUtils.publicDirPath = url.getPath();
 
         Request request = new Request();
         request.setHttpVersion("HTTP/1.1");
@@ -72,10 +72,10 @@ public class ResponseHandlerTest {
     public void testGetImageFiles() {
         DataOutputStream out = new DataOutputStream(System.out);
         ResponseHandler responseHandler = new ResponseHandler(out);
-        responseHandler.setFileUtils(new FileUtils(""));
+        FileUtils.publicDirPath = "";
 
         URL url = getClass().getClassLoader().getResource("./");
-        responseHandler.setFileUtils(new FileUtils(url.getPath()));
+        FileUtils.publicDirPath = url.getPath();
 
         Request request = new Request();
         request.setHttpVersion("HTTP/1.1");

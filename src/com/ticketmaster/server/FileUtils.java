@@ -10,28 +10,28 @@ import java.io.IOException;
  */
 public class FileUtils {
 
-    private final String publicDirPath;
+    public static String publicDirPath;
 
-    FileUtils(String publicDirPath) {
-        this.publicDirPath = publicDirPath;
-    }
+//    FileUtils(String publicDirPath) {
+//        this.publicDirPath = publicDirPath;
+//    }
 
-    public boolean resourceExistsInPath(String path) {
+    public static boolean resourceExistsInPath(String path) {
         File file = new File(publicDirPath + path);
         return file.exists();
     }
 
-    public boolean isFile(String path) {
+    public static boolean isFile(String path) {
         File file = new File(publicDirPath + path);
         return file.isFile();
     }
 
-    public boolean isDirectory(String path) {
+    public static boolean isDirectory(String path) {
         File file = new File(publicDirPath + path);
         return file.isDirectory();
     }
 
-    public String getFileContentType(String path) {
+    public static String getFileContentType(String path) {
 
         String contentType = "text/html";
         File file = new File(publicDirPath + path);
@@ -48,7 +48,7 @@ public class FileUtils {
         return contentType;
     }
 
-    public byte[] getFileContent(String path) {
+    public static byte[] getFileContent(String path) {
         byte[] content = null;
         try {
             File file = new File(publicDirPath + path);

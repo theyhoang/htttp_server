@@ -16,7 +16,6 @@ public class ResponseHandler {
 
     private final String HTTP_VERSION = "HTTP/1.1";
 
-    private FileUtils fileUtils;
     private OutputWriter outputWriter;
 
     public ResponseHandler(DataOutputStream out) {
@@ -45,7 +44,7 @@ public class ResponseHandler {
         if (outputWriter == null)
             return null;
         Response response = new Response();
-        if (fileUtils.resourceExistsInPath(request.getUrl()))
+        if (FileUtils.resourceExistsInPath(request.getUrl()))
             response.setStatusCode(Response.STATUS_CODE_OK);
         else {
             response.setStatusCode(Response.STATUS_CODE_NOT_FOUND);
@@ -59,10 +58,10 @@ public class ResponseHandler {
         // TODO: error handling
 
         if (response.getStatusCode() == (Response.STATUS_CODE_OK)) {
-            if (fileUtils.isFile(request.getUrl())) {
-                response.setContentType(fileUtils.getFileContentType(request.getUrl()));
-                response.setMessage(fileUtils.getFileContent(request.getUrl()));
-            } else if (fileUtils.isDirectory(request.getUrl())) {
+            if (FileUtils.isFile(request.getUrl())) {
+                response.setContentType(FileUtils.getFileContentType(request.getUrl()));
+                response.setMessage(FileUtils.getFileContent(request.getUrl()));
+            } else if (FileUtils.isDirectory(request.getUrl())) {
                 response.setMessage(getDirectoryPage(request.getUrl()).getBytes());
             } else {
                 // TODO: ERROR HANDLING
@@ -88,9 +87,5 @@ public class ResponseHandler {
         //    // Send the HTML page
         //    printWriter.write("<H1>Hello Sean</H1>");
         outputWriter.outputResponse(response);
-    }
-
-    public void setFileUtils(FileUtils fileUtils) {
-        this.fileUtils = fileUtils;
     }
 }

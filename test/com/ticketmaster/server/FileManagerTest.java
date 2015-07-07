@@ -11,39 +11,37 @@ import java.net.URL;
  */
 public class FileManagerTest {
 
-    private FileUtils fileUtils;
-
     @Before
     public void setUp() {
         URL url = getClass().getClassLoader().getResource("./");
-        fileUtils = new FileUtils(url.getPath());
+        FileUtils.publicDirPath = url.getPath();
     }
 
     @Test
     public void testResourceExistsInPath() {
-        Assert.assertTrue(fileUtils.resourceExistsInPath("/file1"));
-        Assert.assertFalse(fileUtils.resourceExistsInPath("/dontexist"));
+        Assert.assertTrue(FileUtils.resourceExistsInPath("/file1"));
+        Assert.assertFalse(FileUtils.resourceExistsInPath("/dontexist"));
     }
 
     @Test
     public void testIsFile() {
-        Assert.assertTrue(fileUtils.isFile("/file1"));
+        Assert.assertTrue(FileUtils.isFile("/file1"));
     }
 
 
     // TODO: How to test?
 //    @Test
     public void testIsDirectory() {
-        Assert.assertTrue(fileUtils.isDirectory("/folderTest"));
+        Assert.assertTrue(FileUtils.isDirectory("/folderTest"));
     }
 
     @Test
     public void testGetFileContentType() {
-        Assert.assertEquals("image/jpeg", fileUtils.getFileContentType("/image.jpeg"));
+        Assert.assertEquals("image/jpeg", FileUtils.getFileContentType("/image.jpeg"));
     }
 
     @Test
     public void testFileContent() {
-        Assert.assertNotNull(fileUtils.getFileContent("/file1"));
+        Assert.assertNotNull(FileUtils.getFileContent("/file1"));
     }
 }
