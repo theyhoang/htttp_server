@@ -1,8 +1,11 @@
 package com.ticketmaster.server;
 
+import com.ticketmaster.server.input.InputReader;
 import com.ticketmaster.server.model.Method;
 import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
+import com.ticketmaster.server.request.RequestHandler;
+import com.ticketmaster.server.response.ResponseHandler;
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -87,8 +90,8 @@ public class Server extends Thread{
 
                 Request request = requestHandler.readRequest(input);
 
-                FileManager fileManager = new FileManager(publicDirPath);
-                responseHandler.setFileManager(fileManager);
+                FileUtils fileUtils = new FileUtils(publicDirPath);
+                responseHandler.setFileUtils(fileUtils);
 
                 // TODO: based on type of request, have factory generate appropriate response handler
                 Response response = responseHandler.getResponse(request);

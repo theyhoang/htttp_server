@@ -8,11 +8,11 @@ import java.io.IOException;
 /**
  * Created by yen.hoang on 5/8/15.
  */
-public class FileManager {
+public class FileUtils {
 
     private final String publicDirPath;
 
-    FileManager(String publicDirPath) {
+    FileUtils(String publicDirPath) {
         this.publicDirPath = publicDirPath;
     }
 

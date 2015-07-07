@@ -1,4 +1,4 @@
-package com.ticketmaster.server;
+package com.ticketmaster.server.request;
 
 import com.ticketmaster.server.model.Method;
 import com.ticketmaster.server.model.Request;

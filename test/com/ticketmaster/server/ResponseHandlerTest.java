@@ -3,14 +3,12 @@ package com.ticketmaster.server;
 import com.ticketmaster.server.model.Method;
 import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
+import com.ticketmaster.server.response.ResponseHandler;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.*;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by yen.hoang on 3/25/15.
@@ -22,7 +20,7 @@ public class ResponseHandlerTest {
 
         DataOutputStream out = new DataOutputStream(System.out);
         ResponseHandler responseHandler = new ResponseHandler(out);
-        responseHandler.setFileManager(new FileManager(""));
+        responseHandler.setFileUtils(new FileUtils(""));
 
         Request request = new Request();
         request.setHttpVersion("HTTP/1.1");
@@ -42,7 +40,7 @@ public class ResponseHandlerTest {
         ResponseHandler responseHandler = new ResponseHandler(out);
 
         URL url = getClass().getClassLoader().getResource("./");
-        responseHandler.setFileManager(new FileManager(url.getPath()));
+        responseHandler.setFileUtils(new FileUtils(url.getPath()));
 
 
         // TODO
@@ -52,10 +50,10 @@ public class ResponseHandlerTest {
     public void testGetFileContent() {
         DataOutputStream out = new DataOutputStream(System.out);
         ResponseHandler responseHandler = new ResponseHandler(out);
-        responseHandler.setFileManager(new FileManager(""));
+        responseHandler.setFileUtils(new FileUtils(""));
 
         URL url = getClass().getClassLoader().getResource("./");
-        responseHandler.setFileManager(new FileManager(url.getPath()));
+        responseHandler.setFileUtils(new FileUtils(url.getPath()));
 
         Request request = new Request();
         request.setHttpVersion("HTTP/1.1");
@@ -74,10 +72,10 @@ public class ResponseHandlerTest {
     public void testGetImageFiles() {
         DataOutputStream out = new DataOutputStream(System.out);
         ResponseHandler responseHandler = new ResponseHandler(out);
-        responseHandler.setFileManager(new FileManager(""));
+        responseHandler.setFileUtils(new FileUtils(""));
 
         URL url = getClass().getClassLoader().getResource("./");
-        responseHandler.setFileManager(new FileManager(url.getPath()));
+        responseHandler.setFileUtils(new FileUtils(url.getPath()));
 
         Request request = new Request();
         request.setHttpVersion("HTTP/1.1");

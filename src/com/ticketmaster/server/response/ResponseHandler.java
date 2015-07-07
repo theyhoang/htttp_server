@@ -1,7 +1,9 @@
-package com.ticketmaster.server;
+package com.ticketmaster.server.response;
 
+import com.ticketmaster.server.FileUtils;
 import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
+import com.ticketmaster.server.output.OutputWriter;
 
 import java.io.DataOutputStream;
 
@@ -14,7 +16,7 @@ public class ResponseHandler {
 
     private final String HTTP_VERSION = "HTTP/1.1";
 
-    private FileManager fileManager;
+    private FileUtils fileUtils;
     private OutputWriter outputWriter;
 
     public ResponseHandler(DataOutputStream out) {
@@ -43,7 +45,7 @@ public class ResponseHandler {
         if (outputWriter == null)
             return null;
         Response response = new Response();
-        if (fileManager.resourceExistsInPath(request.getUrl()))
+        if (fileUtils.resourceExistsInPath(request.getUrl()))
             response.setStatusCode(Response.STATUS_CODE_OK);
         else {
             response.setStatusCode(Response.STATUS_CODE_NOT_FOUND);
@@ -57,10 +59,10 @@ public class ResponseHandler {
         // TODO: error handling
 
         if (response.getStatusCode() == (Response.STATUS_CODE_OK)) {
-            if (fileManager.isFile(request.getUrl())) {
-                response.setContentType(fileManager.getFileContentType(request.getUrl()));
-                response.setMessage(fileManager.getFileContent(request.getUrl()));
-            } else if (fileManager.isDirectory(request.getUrl())) {
+            if (fileUtils.isFile(request.getUrl())) {
+                response.setContentType(fileUtils.getFileContentType(request.getUrl()));
+                response.setMessage(fileUtils.getFileContent(request.getUrl()));
+            } else if (fileUtils.isDirectory(request.getUrl())) {
                 response.setMessage(getDirectoryPage(request.getUrl()).getBytes());
             } else {
                 // TODO: ERROR HANDLING
@@ -88,7 +90,7 @@ public class ResponseHandler {
         outputWriter.outputResponse(response);
     }
 
-    public void setFileManager(FileManager fileManager) {
-        this.fileManager = fileManager;
+    public void setFileUtils(FileUtils fileUtils) {
+        this.fileUtils = fileUtils;
     }
 }

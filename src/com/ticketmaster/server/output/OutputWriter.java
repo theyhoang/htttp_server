@@ -1,4 +1,4 @@
-package com.ticketmaster.server;
+package com.ticketmaster.server.output;
 
 import com.ticketmaster.server.model.Response;
 

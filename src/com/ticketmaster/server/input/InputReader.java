@@ -1,4 +1,4 @@
-package com.ticketmaster.server;
+package com.ticketmaster.server.input;
 
 import java.io.BufferedReader;
 import java.io.IOException;
