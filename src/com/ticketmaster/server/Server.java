@@ -26,7 +26,7 @@ public class Server extends Thread{
     private static ServerSocket serverSocket;
 
         @Option(name = "-p", usage = "port number")
-        private int portNumber = -1;
+        private int portNumber = 5000;
 
         @Option(name = "-d", usage = "path to public directory")
         private String publicDirPath = "";
@@ -75,7 +75,7 @@ public class Server extends Thread{
 
 //            requestHandler.start();
             serverSocket = new ServerSocket(portNumber);
-
+            FileUtils.publicDirPath = publicDirPath;
 
             while (true) {
                 clientSocket = serverSocket.accept();
@@ -91,7 +91,6 @@ public class Server extends Thread{
 
                 Request request = requestHandler.readRequest(input);
 
-                FileUtils.publicDirPath = publicDirPath;
                 DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
                 ResponseHandler responseHandler = new ResponseHandler();
                 OutputWriter outputWriter = new OutputWriter(out);

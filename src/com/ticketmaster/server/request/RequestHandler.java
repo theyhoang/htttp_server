@@ -29,6 +29,7 @@ public class RequestHandler {
             case PUT:
                 break;
             case POST:
+                requestFactory = new PostRequestFactory();
                 break;
             case PATCH:
                 break;
@@ -57,7 +58,12 @@ public class RequestHandler {
             return null;
         }
 
-        Method methodType = Method.valueOf(initialRequest.get(0));
+        Method methodType = null;
+        try {
+           methodType = Method.valueOf(initialRequest.get(0));
+        } catch (IllegalArgumentException ex) {
+            methodType = Method.NOT_SUPPORTED;
+        }
         return methodType;
     }
 }

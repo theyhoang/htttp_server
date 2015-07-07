@@ -23,7 +23,11 @@ public class ResponseHandler {
             case GET:
                 responseFactory = new GetResponseFactory();
                 break;
-            default:
+            case POST:
+                responseFactory = new PostResponseFactory();
+                break;
+            case NOT_SUPPORTED:
+                responseFactory = new NotSupportedResponseFactory();
                 // TODO: throw exception
                 break;
 

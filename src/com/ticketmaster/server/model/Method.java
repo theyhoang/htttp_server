@@ -10,5 +10,6 @@ public enum Method {
     HEAD,
     PATCH,
     DELETE,
-    OPTIONS;
+    OPTIONS,
+    NOT_SUPPORTED;
 }
