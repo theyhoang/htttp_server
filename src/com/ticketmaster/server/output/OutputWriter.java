@@ -23,7 +23,12 @@ public class OutputWriter {
         // write out response
         try {
             outputStream.write(response.getInitialResponseLine().getBytes());
-            // TODO : out.write(rest of headers)
+            if (response.getHeaders() != null) {
+                for (String header : response.getHeaders()) {
+                    outputStream.write((new String(header + "\r\n")).getBytes());
+                }
+            }
+
             if (response.getContentType() != null) {
                 outputStream.write(
                     (new String("Content-Type: " + response.getContentType() + "\r\n")).getBytes());

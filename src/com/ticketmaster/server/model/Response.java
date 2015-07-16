@@ -1,5 +1,7 @@
 package com.ticketmaster.server.model;
 
+import java.util.List;
+
 /**
  * Created by yen.hoang on 3/5/15.
  */
@@ -10,6 +12,7 @@ public class Response {
 //    Content – actual data that is rendered by client and shown to user.
 
     public static final int STATUS_CODE_OK = 200;
+    public static final int STATUS_CODE_FOUND = 302;
     public static final int STATUS_CODE_BAD_REQUEST = 400;
     public static final int STATUS_CODE_FORBIDDEN = 403;
     public static final int STATUS_CODE_NOT_FOUND = 404;
@@ -21,7 +24,7 @@ public class Response {
 
     // TODO: use map for headers, message to body
     private int statusCode;
-    private String headers;
+    private List<String> headers;
     private String contentType;
     private String server;
     private byte[] message;
@@ -36,11 +39,11 @@ public class Response {
     public int getStatusCode() {
         return statusCode;
     }
-    public String getHeaders() {
+    public List<String> getHeaders() {
         return headers;
     }
 
-    public void setHeaders(String headers) {
+    public void setHeaders(List<String> headers) {
         this.headers = headers;
     }
 

@@ -14,6 +14,9 @@ public class ServiceRegistry {
             case "/form":
                 serviceHandler = new FormServiceHandler();
                 break;
+            case "/redirect":
+                serviceHandler = new RedirectServiceHandler();
+                break;
             default:
                 serviceHandler = new UnregisteredServiceHandler();
                 break;
@@ -42,7 +45,7 @@ public class ServiceRegistry {
                 default:
                     break;
             }
-        // TODO: check if response is null, throw an exception
+        // TODO: check if response is null, throw an exception or return method not supported
         return response;
     }
 }
