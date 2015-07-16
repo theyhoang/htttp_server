@@ -24,11 +24,20 @@ public class OutputWriter {
         try {
             outputStream.write(response.getInitialResponseLine().getBytes());
             // TODO : out.write(rest of headers)
-            outputStream.write((new String("Content-Type: " + response.getContentType() + "\r\n")).getBytes());
-            outputStream.write((new String("Content-Length: " + response.getMessage().length + "\r\n")).getBytes());
+            if (response.getContentType() != null) {
+                outputStream.write(
+                    (new String("Content-Type: " + response.getContentType() + "\r\n")).getBytes());
+            }
+            if (response.getMessage() != null) {
+                outputStream.write(
+                    (new String("Content-Length: " + response.getMessage().length + "\r\n"))
+                        .getBytes());
+            }
             outputStream.write(CRLF.getBytes());
-            outputStream.write(response.getMessage());
-            outputStream.write(CRLF.getBytes());
+            if (response.getMessage() != null) {
+                outputStream.write(response.getMessage());
+                outputStream.write(CRLF.getBytes());
+            }
             outputStream.flush();
             outputStream.close();
         } catch (IOException e) {
