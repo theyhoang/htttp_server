@@ -44,17 +44,11 @@ public class UnregisteredServiceHandler implements ServiceHandler{
     }
 
     @Override public Response PUT(Request request) {
-        Response response = new Response();
-        response.setHttpVersion(HTTP_VERSION);
-        response.setStatusCode(Response.STATUS_CODE_METHOD_NOT_ALLOWED);
-        return response;
+        return null;
     }
 
     @Override public Response POST(Request request) {
-        Response response = new Response();
-        response.setHttpVersion(HTTP_VERSION);
-        response.setStatusCode(Response.STATUS_CODE_METHOD_NOT_ALLOWED);
-        return response;
+        return null;
     }
 
     @Override public Response DELETE(Request request) {

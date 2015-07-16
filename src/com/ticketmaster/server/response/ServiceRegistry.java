@@ -46,6 +46,11 @@ public class ServiceRegistry {
                     break;
             }
         // TODO: check if response is null, throw an exception or return method not supported
+        if (response == null) {
+            response = new Response();
+            response.setHttpVersion(ServiceHandler.HTTP_VERSION);
+            response.setStatusCode(Response.STATUS_CODE_METHOD_NOT_ALLOWED);
+        }
         return response;
     }
 }
