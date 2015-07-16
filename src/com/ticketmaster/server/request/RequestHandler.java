@@ -2,10 +2,7 @@ package com.ticketmaster.server.request;
 
 import com.ticketmaster.server.model.Method;
 import com.ticketmaster.server.model.Request;
-import com.ticketmaster.server.request.GetRequestFactory;
-import com.ticketmaster.server.request.RequestFactory;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;

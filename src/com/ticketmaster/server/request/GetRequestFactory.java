@@ -4,7 +4,6 @@ import com.ticketmaster.server.model.Method;
 import com.ticketmaster.server.model.Request;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 /**

@@ -1,7 +1,6 @@
 package com.ticketmaster.server.response;
 
 import com.ticketmaster.server.FileUtils;
-import com.ticketmaster.server.Resources;
 import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
 
