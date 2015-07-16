@@ -15,6 +15,7 @@ public class ServiceRegistry {
                 serviceHandler = new FormServiceHandler();
                 break;
             default:
+                serviceHandler = new UnregisteredServiceHandler();
                 break;
         }
 
