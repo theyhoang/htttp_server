@@ -32,15 +32,22 @@ public class ServiceRegistryTest {
         Assert.assertEquals(response.getInitialResponseLine(), "HTTP/1.1 200 OK\r\n");
     }
 
+
     @Test
-    public void testGetDirectoryPage() {
+    public void testGetDirectoryContents() {
         ServiceRegistry serviceRegistry = new ServiceRegistry();
 
         URL url = getClass().getClassLoader().getResource("./");
         FileUtils.publicDirPath = url.getPath();
 
+        Request request = new Request();
+        request.setHttpVersion("HTTP/1.1");
+        request.setHttpMethod(Method.GET);
+        request.setUrl("/folderTest");
 
-        // TODO
+        Response response = serviceRegistry.generateResponse(request);
+        Assert.assertNotNull(response);
+        Assert.assertTrue(response.getContentType().equals("text/html"));
     }
 
     @Test
