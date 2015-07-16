@@ -17,11 +17,18 @@ public class Resources {
         if (dataToAdd.length >= 2) {
             String key = dataToAdd[0];
             String value = dataToAdd[1];
+//            if (data.containsKey(key)) {
+//                removeData(dataToAddString);
+//            }
             data.put(key, value);
             return true;
         } else {
             return false;
         }
+    }
+
+    public static void clearData() {
+        data.clear();
     }
 
     public static boolean removeData(String dataToRemoveString) {

@@ -7,6 +7,8 @@ import com.ticketmaster.server.model.Response;
 import com.ticketmaster.server.output.OutputWriter;
 import com.ticketmaster.server.request.RequestHandler;
 import com.ticketmaster.server.response.ResponseHandler;
+import com.ticketmaster.server.response.ServiceHandler;
+import com.ticketmaster.server.response.ServiceRegistry;
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -94,11 +96,14 @@ public class Server extends Thread{
                 Request request = requestHandler.readRequest(input);
 
                 DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
-                ResponseHandler responseHandler = new ResponseHandler();
+
+                ServiceRegistry serviceRegistry = new ServiceRegistry();
+//                ResponseHandler responseHandler = new ResponseHandler();
                 OutputWriter outputWriter = new OutputWriter(out);
 
                 // TODO: based on type of request, have factory generate appropriate response handler
-                Response response = responseHandler.getResponse(request);
+//                Response response = responseHandler.getResponse(request);
+                Response response = serviceRegistry.generateResponse(request);
                 outputWriter.outputResponse(response);
 
                 clientSocket.close();

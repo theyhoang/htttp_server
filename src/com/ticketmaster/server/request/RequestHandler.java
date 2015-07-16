@@ -28,6 +28,7 @@ public class RequestHandler {
                 requestFactory = new GetRequestFactory();
                 break;
             case PUT:
+                requestFactory = new PutRequestFactory();
                 break;
             case POST:
                 requestFactory = new PostRequestFactory();
@@ -35,6 +36,7 @@ public class RequestHandler {
             case PATCH:
                 break;
             case DELETE:
+                requestFactory = new DeleteRequestFactory();
                 break;
             case OPTIONS:
                 break;
