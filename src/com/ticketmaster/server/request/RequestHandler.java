@@ -20,6 +20,7 @@ public class RequestHandler {
         // TODO: read headers, depending on method act accordingly, return
         Method methodType = parseForMethodType(inputList);
 
+        // TODO: check if path is valid
         // get requestfactory based on method type
         RequestFactory requestFactory = null;
         switch(methodType) {

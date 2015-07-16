@@ -1,6 +1,7 @@
 package com.ticketmaster.server.response;
 
 import com.ticketmaster.server.FileUtils;
+import com.ticketmaster.server.Resources;
 import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
 
@@ -18,7 +19,12 @@ public class GetResponseFactory extends ResponseFactory {
             response.setStatusCode(Response.STATUS_CODE_OK);
         }
         else {
-            response.setStatusCode(Response.STATUS_CODE_NOT_FOUND);
+            if(request.getUrl().equals("/form")) {
+                // TODO: create form handler and retrieve data
+                response.setStatusCode(Response.STATUS_CODE_OK);
+            } else {
+                response.setStatusCode(Response.STATUS_CODE_NOT_FOUND);
+            }
         }
 
         response.setHttpVersion(HTTP_VERSION);
@@ -35,6 +41,9 @@ public class GetResponseFactory extends ResponseFactory {
             } else if (FileUtils.isDirectory(request.getUrl())) {
                 response.setMessage(getDirectoryPage(request.getUrl()).getBytes());
             } else {
+                response.setMessage(Resources.getData().getBytes());
+                response.setContentType("text/html");
+
                 // TODO: ERROR HANDLING
             }
         } else {

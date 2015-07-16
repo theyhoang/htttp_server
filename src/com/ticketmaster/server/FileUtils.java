@@ -4,6 +4,7 @@ import com.google.common.io.Files;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * Created by yen.hoang on 5/8/15.
@@ -15,6 +16,8 @@ public class FileUtils {
 //    FileUtils(String publicDirPath) {
 //        this.publicDirPath = publicDirPath;
 //    }
+
+    public static String[] contentTypes = new String[] {"application/x-www-form-urlencoded", "text/html", "image/jpeg", "image/gif", "image/png" };
 
     public static boolean resourceExistsInPath(String path) {
         File file = new File(publicDirPath + path);
@@ -57,5 +60,19 @@ public class FileUtils {
             e.printStackTrace();
         }
         return content;
+    }
+
+    public static void deleteFile(String path) {
+        try{
+            String tempFile = publicDirPath + path;
+            //Delete if tempFile exists
+            File fileTemp = new File(tempFile);
+            if (fileTemp.exists()){
+                fileTemp.delete();
+            }
+        }catch(Exception e){
+            // if any error occurs
+            e.printStackTrace();
+        }
     }
 }

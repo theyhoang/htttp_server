@@ -18,6 +18,7 @@ public class ResponseHandler {
     public Response getResponse(Request request) {
         Method methodType = request.getHttpMethod();
 
+        // TODO: check if path is valid aka build response for invalid url
         ResponseFactory responseFactory = null;
         switch (methodType) {
             case GET:

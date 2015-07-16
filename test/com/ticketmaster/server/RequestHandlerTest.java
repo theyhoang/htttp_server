@@ -52,7 +52,7 @@ public class RequestHandlerTest {
         Assert.assertEquals(Method.GET, methodType);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testParseForMethodTypeInvalidType() throws IOException {
         String testRequestString = "BAD / HTTP/1.1\r\n";
         testRequestString += "User-Agent: curl/7.41.0\r\n";
@@ -113,6 +113,29 @@ public class RequestHandlerTest {
 
         // TODO: finish test
 
+        testRequestString2 = "POST /favicon.ico HTTP/1.1\r\n";
+        testRequestString2 += "Host: localhost:9090\r\n";
+        testRequestString2 += "Connection: keep-alive\r\n";
+        testRequestString2 += "Accept: */*\r\n";
+        testRequestString2 += "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.118 Safari/537.36\r\n";
+        testRequestString2 += "Accept-Encoding: gzip, deflate, sdch\r\n";
+        testRequestString2 += "Accept-Language: en-US,en;q=0.8\r\n";
+        testRequestString2 += "Content-Length: 10\r\n";
+        testRequestString2 += "\r\n";
+        testRequestString2 += "home=Cosby";
+
+        stream = new ByteArrayInputStream(testRequestString2.getBytes(StandardCharsets.UTF_8));
+        inputReader = new InputReader(new BufferedReader( new InputStreamReader(stream)));
+        requestHandler = new RequestHandler();
+        request2 = requestHandler.readRequest(inputReader.readInput());
+
+
+        Assert.assertNotNull(request2);
+        Assert.assertEquals(request2.getHttpMethod(), Method.POST);
+        Assert.assertEquals(request2.getHttpVersion(), "HTTP/1.1");
+        Assert.assertEquals(request2.getUrl(), "/favicon.ico");
+        Assert.assertEquals(request2.getHeaders().size(), 8);
+        Assert.assertEquals(request2.getMessage(), "home=Cosby");
 
     }
 }

@@ -20,7 +20,8 @@ public class PostRequestFactory extends RequestFactory{
         request = setHeaders(request, input);
 
         if (hasMessage(request)) {
-            setMessage(request, input);
+//            System.out.println("HAS MESSAGE!!!!!!!!!");
+            request = setMessage(request, input);
         }
 
         return request;

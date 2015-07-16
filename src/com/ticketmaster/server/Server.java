@@ -76,6 +76,8 @@ public class Server extends Thread{
 //            requestHandler.start();
             serverSocket = new ServerSocket(portNumber);
             FileUtils.publicDirPath = publicDirPath;
+            // remove form file if exists
+//            FileUtils.deleteFile("form");
 
             while (true) {
                 clientSocket = serverSocket.accept();

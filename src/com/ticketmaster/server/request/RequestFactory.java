@@ -16,11 +16,12 @@ public abstract class RequestFactory {
 
     protected Request setHeaders(Request request, List<String> input) {
         List<String> headers = new ArrayList<String>();
-        for (int i = 0; i < input.size(); i++) {
+        for (int i = 0; i < input.size() - 1; i++) {
             // look for blank line to end headers
-            if (!input.get(i).isEmpty()) {
-                headers.add(input.get(i));
+            if (input.get(i).isEmpty()) {
+                break;
             }
+            headers.add(input.get(i));
         }
 
         request.setHeaders(headers);

@@ -25,6 +25,7 @@ public class OutputWriter {
             outputStream.write(response.getInitialResponseLine().getBytes());
             // TODO : out.write(rest of headers)
             outputStream.write((new String("Content-Type: " + response.getContentType() + "\r\n")).getBytes());
+            outputStream.write((new String("Content-Length: " + response.getMessage().length + "\r\n")).getBytes());
             outputStream.write(CRLF.getBytes());
             outputStream.write(response.getMessage());
             outputStream.write(CRLF.getBytes());
