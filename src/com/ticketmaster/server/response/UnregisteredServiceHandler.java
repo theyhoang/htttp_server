@@ -28,7 +28,15 @@ public class UnregisteredServiceHandler implements ServiceHandler{
                 response.setMessage(FileUtils.getFileContent(request.getUrl()));
             } else if (FileUtils.isDirectory(request.getUrl())) {
                 // TODO: return list of directories
-//                response.setMessage(getDirectoryPage(request.getUrl()).getBytes());
+                response.setContentType("text/html");
+                StringBuilder sb = new StringBuilder();
+                String[] contents = FileUtils.getDirectoryContents(request.getUrl());
+                for (String content : contents) {
+                    String urlContent = request.getUrl() + content;
+                    sb.append("<a href=" + "\"" + urlContent + "\"" + ">" + content + "</a><br />");
+                }
+                String message = sb.toString();
+                response.setMessage(message.getBytes());
             } else {
                 // TODO: ERROR HANDLING
             }

@@ -34,6 +34,11 @@ public class FileUtils {
         return file.isDirectory();
     }
 
+    public static String[] getDirectoryContents(String path) {
+        File file = new File(publicDirPath + path);
+        return file.list();
+    }
+
     public static String getFileContentType(String path) {
 
         String contentType = "text/html";

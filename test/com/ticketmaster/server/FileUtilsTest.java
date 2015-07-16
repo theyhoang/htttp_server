@@ -4,6 +4,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.net.URL;
 
 /**
@@ -30,9 +31,15 @@ public class FileUtilsTest {
 
 
     // TODO: How to test?
-//    @Test
+    @Test
     public void testIsDirectory() {
         Assert.assertTrue(FileUtils.isDirectory("/folderTest"));
+    }
+
+    @Test
+    public void testGetDirectoryContents() {
+        Assert.assertNotNull(FileUtils.getDirectoryContents("/folderTest"));
+        Assert.assertEquals(5, FileUtils.getDirectoryContents("/folderTest").length);
     }
 
     @Test

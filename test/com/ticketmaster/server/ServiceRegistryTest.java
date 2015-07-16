@@ -3,7 +3,6 @@ package com.ticketmaster.server;
 import com.ticketmaster.server.model.Method;
 import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
-import com.ticketmaster.server.response.ResponseHandler;
 import com.ticketmaster.server.response.ServiceRegistry;
 import org.junit.Assert;
 import org.junit.Test;
