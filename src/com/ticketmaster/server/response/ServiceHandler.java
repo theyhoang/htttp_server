@@ -17,4 +17,6 @@ public interface ServiceHandler {
     Response POST(Request request);
 
     Response DELETE(Request request);
+
+    Response HEAD(Request request);
 }

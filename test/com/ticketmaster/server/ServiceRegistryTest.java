@@ -13,7 +13,7 @@ import java.net.URL;
  * Created by yen.hoang on 7/16/15.
  */
 public class ServiceRegistryTest {
-    // TODO
+    // TODO: redo tests
     @Test
     public void testConstructResponse() {
 

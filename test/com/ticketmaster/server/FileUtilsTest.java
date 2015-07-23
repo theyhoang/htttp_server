@@ -29,7 +29,6 @@ public class FileUtilsTest {
     }
 
 
-    // TODO: How to test?
     @Test
     public void testIsDirectory() {
         Assert.assertTrue(FileUtils.isDirectory("/folderTest"));

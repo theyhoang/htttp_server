@@ -39,10 +39,14 @@ public class ServiceRegistry {
                 case DELETE:
                     response = serviceHandler.DELETE(request);
                     break;
+                case HEAD:
+                    response = serviceHandler.HEAD(request);
+                    break;
                 default:
                     break;
             }
-        // TODO: check if response is null, throw an exception or return method not supported
+
+        // if response is null, method is not supported
         if (response == null) {
             response = new Response();
             response.setHttpVersion(ServiceHandler.HTTP_VERSION);

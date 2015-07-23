@@ -29,7 +29,6 @@ public abstract class RequestFactory {
     }
 
     protected Request setPathAndHttpVersion(Request request, List<String> input) {
-        // TODO: put inside a method for readability
         String initialRequestLine = input.get(0);
         List<String> initialRequest = Arrays.asList(initialRequestLine.split("\\s+"));
 
@@ -37,7 +36,6 @@ public abstract class RequestFactory {
         String path = initialRequest.get(1);
 
 
-        // TODO: validation
         request.setUrl(path);
 
         // finally http version

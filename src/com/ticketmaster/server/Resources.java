@@ -1,17 +1,19 @@
 package com.ticketmaster.server;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by yen.hoang on 7/7/15.
  */
 
-// TODO: consider creating singleton
 public class Resources {
 
     public static HashMap<String, String> data = new HashMap<String, String>();
+    public static List<String> logs = new ArrayList<>();
 
     public static boolean addData(String dataToAddString) {
         String[] dataToAdd = dataToAddString.split("=");
@@ -19,9 +21,6 @@ public class Resources {
         if (dataToAdd.length >= 2) {
             String key = dataToAdd[0];
             String value = dataToAdd[1];
-//            if (data.containsKey(key)) {
-//                removeData(dataToAddString);
-//            }
             data.put(key, value);
             return true;
         } else {
@@ -58,5 +57,13 @@ public class Resources {
             dataString = dataString.concat(entry.getKey() + "=" + entry.getValue());
         }
         return dataString;
+    }
+
+    public static void addLog(String log) {
+        logs.add(log);
+    }
+
+    public static List<String> getLogs() {
+        return logs;
     }
 }

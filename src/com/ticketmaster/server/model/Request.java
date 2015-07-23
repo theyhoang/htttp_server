@@ -7,11 +7,6 @@ import java.util.List;
  */
 public class Request {
 
-//    HTTP Method – action to be performed, usually GET, POST, PUT etc.
-//    URL – Page to access
-//    Form Parameters – similar to arguments in a java method, for example user,password details from login page.
-
-    // TODO: use standard terminology: message = body, map for headers
     // components of a request
     private Method httpMethod;
     private String url;

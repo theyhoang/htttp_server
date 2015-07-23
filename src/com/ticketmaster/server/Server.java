@@ -6,10 +6,7 @@ import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
 import com.ticketmaster.server.output.OutputWriter;
 import com.ticketmaster.server.request.RequestHandler;
-import com.ticketmaster.server.response.FileServiceHandler;
-import com.ticketmaster.server.response.FormServiceHandler;
-import com.ticketmaster.server.response.RedirectServiceHandler;
-import com.ticketmaster.server.response.ServiceRegistry;
+import com.ticketmaster.server.response.*;
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -75,6 +72,7 @@ public class Server extends Thread{
         ServiceRegistry serviceRegistry = new ServiceRegistry();
         serviceRegistry.registerServiceHandler("/form", new FormServiceHandler());
         serviceRegistry.registerServiceHandler("/redirect", new RedirectServiceHandler());
+        serviceRegistry.registerServiceHandler("/logs", new LogsServiceHandler());
 
         serviceRegistry.setDefaultServiceHandler(new FileServiceHandler());
 

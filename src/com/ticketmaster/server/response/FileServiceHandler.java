@@ -11,7 +11,6 @@ public class FileServiceHandler implements ServiceHandler{
     @Override public Response GET(Request request) {
         Response response = new Response();
 
-        // TODO: check if resource
         if (FileUtils.resourceExistsInPath(request.getUrl())) {
             response.setStatusCode(Response.STATUS_CODE_OK);
         } else {
@@ -19,14 +18,14 @@ public class FileServiceHandler implements ServiceHandler{
         }
 
         response.setHttpVersion(HTTP_VERSION);
-        // TODO: HEADERS?
 
         if (response.getStatusCode() == (Response.STATUS_CODE_OK)) {
+            // if a file return file contents
             if (FileUtils.isFile(request.getUrl())) {
                 response.setContentType(FileUtils.getFileContentType(request.getUrl()));
                 response.setMessage(FileUtils.getFileContent(request.getUrl()));
+                // if directory return directory listing/contents
             } else if (FileUtils.isDirectory(request.getUrl())) {
-                // TODO: return list of directories
                 response.setContentType("text/html");
                 StringBuilder sb = new StringBuilder();
                 String[] contents = FileUtils.getDirectoryContents(request.getUrl());
@@ -52,6 +51,10 @@ public class FileServiceHandler implements ServiceHandler{
     }
 
     @Override public Response DELETE(Request request) {
+        return null;
+    }
+
+    @Override public Response HEAD(Request request) {
         return null;
     }
 }

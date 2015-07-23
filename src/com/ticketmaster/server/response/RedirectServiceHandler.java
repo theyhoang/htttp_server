@@ -32,4 +32,8 @@ public class RedirectServiceHandler implements ServiceHandler{
     @Override public Response DELETE(Request request) {
         return null;
     }
+
+    @Override public Response HEAD(Request request) {
+        return null;
+    }
 }

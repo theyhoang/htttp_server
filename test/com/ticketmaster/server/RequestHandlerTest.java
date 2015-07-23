@@ -111,8 +111,6 @@ public class RequestHandlerTest {
         Assert.assertEquals(request2.getUrl(), "/favicon.ico");
         Assert.assertEquals(request2.getHeaders().size(), 7);
 
-        // TODO: finish test
-
         testRequestString2 = "POST /favicon.ico HTTP/1.1\r\n";
         testRequestString2 += "Host: localhost:9090\r\n";
         testRequestString2 += "Connection: keep-alive\r\n";

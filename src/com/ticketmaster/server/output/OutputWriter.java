@@ -18,7 +18,6 @@ public class OutputWriter {
         this.outputStream = outputStream;
     }
 
-    // TODO: output as stream versus keeping file in memory
     public void outputResponse(Response response) {
         // write out response
         try {

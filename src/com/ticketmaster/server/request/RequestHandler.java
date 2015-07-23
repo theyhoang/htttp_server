@@ -1,5 +1,6 @@
 package com.ticketmaster.server.request;
 
+import com.ticketmaster.server.Resources;
 import com.ticketmaster.server.model.Method;
 import com.ticketmaster.server.model.Request;
 
@@ -13,11 +14,8 @@ import java.util.List;
 public class RequestHandler {
 
     public Request readRequest(List<String> inputList) throws IOException {
-        // TODO: process request
-        // TODO: read headers, depending on method act accordingly, return
         Method methodType = parseForMethodType(inputList);
 
-        // TODO: check if path is valid
         // get requestfactory based on method type
         RequestFactory requestFactory = null;
         switch(methodType) {
@@ -38,13 +36,15 @@ public class RequestHandler {
             case OPTIONS:
                 break;
             case HEAD:
+                requestFactory = new HeadRequestFactory();
                 break;
             default:
                 // TODO: should throw exception
                 break;
         }
 
-        // TODO: generate request with requestfactory type and return
+        // add log and generate request
+        Resources.addLog(inputList.get(0));
         Request request = requestFactory.generateRequest(inputList);
 
         return request;

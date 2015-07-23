@@ -43,4 +43,8 @@ public class FormServiceHandler implements ServiceHandler{
         response.setHttpVersion(HTTP_VERSION);
         return response;
     }
+
+    @Override public Response HEAD(Request request) {
+        return null;
+    }
 }
