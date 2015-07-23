@@ -7,7 +7,7 @@ import com.ticketmaster.server.model.Response;
 /**
  * Created by yen.hoang on 7/16/15.
  */
-public class UnregisteredServiceHandler implements ServiceHandler{
+public class FileServiceHandler implements ServiceHandler{
     @Override public Response GET(Request request) {
         Response response = new Response();
 

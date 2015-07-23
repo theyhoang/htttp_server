@@ -6,6 +6,9 @@ import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
 import com.ticketmaster.server.output.OutputWriter;
 import com.ticketmaster.server.request.RequestHandler;
+import com.ticketmaster.server.response.FileServiceHandler;
+import com.ticketmaster.server.response.FormServiceHandler;
+import com.ticketmaster.server.response.RedirectServiceHandler;
 import com.ticketmaster.server.response.ServiceRegistry;
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
@@ -35,10 +38,11 @@ public class Server extends Thread{
         @Argument
         private List<String> arguments = new ArrayList();
 
+    private ServiceRegistry serviceRegistry;
+
 
     public static void main(String[] args) {
         new Server().doMain(args);
-
     }
 
 
@@ -59,9 +63,24 @@ public class Server extends Thread{
         System.out.println("Port Number: " + portNumber);
         System.out.println("Public Directory: " + publicDirPath);
 
+        // initialize registry
+        // TODO: register each of service handler, set default service handler
+        serviceRegistry = initializeServiceRegistry();
+
         // Start server here
         startServer();
     }
+
+    public ServiceRegistry initializeServiceRegistry() {
+        ServiceRegistry serviceRegistry = new ServiceRegistry();
+        serviceRegistry.registerServiceHandler("/form", new FormServiceHandler());
+        serviceRegistry.registerServiceHandler("/redirect", new RedirectServiceHandler());
+
+        serviceRegistry.setDefaultServiceHandler(new FileServiceHandler());
+
+        return serviceRegistry;
+    }
+
     public void run() {
         start();
     }
@@ -95,7 +114,6 @@ public class Server extends Thread{
 
                 DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
 
-                ServiceRegistry serviceRegistry = new ServiceRegistry();
 //                ResponseHandler responseHandler = new ResponseHandler();
                 OutputWriter outputWriter = new OutputWriter(out);
 
@@ -114,17 +132,6 @@ public class Server extends Thread{
 
 
 
-    }
-
-    // Method to read request from client
-    public Request readRequest() {
-        return null;
-    }
-
-
-    // Method to construct response
-    public Response constructResponse(Method method) {
-        return null;
     }
 
 }
