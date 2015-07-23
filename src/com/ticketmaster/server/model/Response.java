@@ -12,6 +12,7 @@ public class Response {
 //    Content – actual data that is rendered by client and shown to user.
 
     public static final int STATUS_CODE_OK = 200;
+    public static final int STATUS_CODE_PARTIAL_CONTENT = 206;
     public static final int STATUS_CODE_FOUND = 302;
     public static final int STATUS_CODE_BAD_REQUEST = 400;
     public static final int STATUS_CODE_UNAUTHORIZED = 401;
