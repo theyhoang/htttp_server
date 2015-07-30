@@ -71,39 +71,50 @@ public class FileServiceHandler implements ServiceHandler{
             }
         }
 
+        // use bounds to retrieve partial bytes
+        byte[] fileContent = FileUtils.getFileContent(request.getUrl());
+
         // Range: bytes=0-999
         String[] rangeStringList = range.split("=");
 
-        //0-999, 0-
+        //0-999, 0-, -6 (last six bytes)
         range = rangeStringList[1];
 
         rangeStringList = range.split("-");
         Integer lowerbound = null;
         Integer upperbound = null;
         if (rangeStringList.length == 2) {
-            // then we have upper and lower bound
-            lowerbound = new Integer(rangeStringList[0]);
-            upperbound = new Integer(rangeStringList[1]);
+            if (!rangeStringList[0].isEmpty()) {
+                // if we have upper/lower bound
+                lowerbound = new Integer(rangeStringList[0]);
+                upperbound = new Integer(rangeStringList[1]);
+            } else {
+                // if we get last # of bytes
+                lowerbound = fileContent.length - new Integer(rangeStringList[1]);
+            }
         } else if (rangeStringList.length == 1) {
-            // then we only have lower bound
+            // we only have lower bound
             lowerbound = new Integer(rangeStringList[0]);
         }
-        // use bounds to retrieve partial bytes
-        byte[] fileContent = FileUtils.getFileContent(request.getUrl());
+
 
         // System.arraycopy(sourceArray,
 //        sourceStartIndex,
 //            targetArray,
 //            targetStartIndex,
 //            length);
-        byte[] partialContent = new byte[fileContent.length];
         if (upperbound == null) {
             upperbound = fileContent.length;
         }
 
         Integer rangeLength = upperbound - lowerbound;
+        if (!upperbound.equals(fileContent.length)) {
+            rangeLength++;
+        }
 
-        System.arraycopy(fileContent, lowerbound, partialContent, 0, rangeLength + 1);
+        byte[] partialContent = new byte[rangeLength];
+
+        System.arraycopy(fileContent, lowerbound, partialContent, 0, rangeLength);
 
         return partialContent;
     }

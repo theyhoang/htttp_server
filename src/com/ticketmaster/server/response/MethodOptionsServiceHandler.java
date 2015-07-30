@@ -35,7 +35,7 @@ public class MethodOptionsServiceHandler implements ServiceHandler{
         Response response = new Response();
 
         String methodsAllowed = "GET,HEAD,POST,OPTIONS,PUT";
-        
+
         methodsAllowed = "Allow: " + methodsAllowed;
 //        System.out.println(methodsAllowed);
         response.setStatusCode(Response.STATUS_CODE_OK);

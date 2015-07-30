@@ -3,11 +3,14 @@ package com.ticketmaster.server;
 import com.ticketmaster.server.input.InputReader;
 import com.ticketmaster.server.model.Method;
 import com.ticketmaster.server.model.Request;
+import com.ticketmaster.server.model.Response;
 import com.ticketmaster.server.request.RequestHandler;
+import com.ticketmaster.server.response.ServiceRegistry;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.*;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -135,5 +138,40 @@ public class RequestHandlerTest {
         Assert.assertEquals(request2.getHeaders().size(), 8);
         Assert.assertEquals(request2.getMessage(), "home=Cosby");
 
+    }
+
+    @Test
+    // TODO: move this to tests for responses and add test cases
+    public void testPartialContentRequest() throws IOException {
+        URL url = getClass().getClassLoader().getResource("./");
+        FileUtils.publicDirPath = url.getPath();
+        String testRequestString = "GET /partial_content.txt HTTP/1.1\r\n";
+        testRequestString += "User-Agent: curl/7.41.0\r\n";
+        testRequestString += "Host: localhost:9090\r\n";
+        testRequestString += "Range: bytes=0-4\r\n";
+        testRequestString += "\r\n";
+
+
+        InputStream stream = new ByteArrayInputStream(testRequestString.getBytes(StandardCharsets.UTF_8));
+        InputReader inputReader = new InputReader(new BufferedReader( new InputStreamReader(stream)));
+        RequestHandler requestHandler = new RequestHandler();
+        Request request = requestHandler.readRequest(inputReader.readInput());
+
+        ServiceRegistry serviceRegistry = ServiceRegistry.initialize();
+        Response response = serviceRegistry.generateResponse(request);
+
+        Assert.assertNotNull(response);
+
+        testRequestString = "GET /partial_content.txt HTTP/1.1\r\n";
+        testRequestString += "User-Agent: curl/7.41.0\r\n";
+        testRequestString += "Host: localhost:9090\r\n";
+        testRequestString += "Range: bytes=-6\r\n";
+        testRequestString += "\r\n";
+
+        stream = new ByteArrayInputStream(testRequestString.getBytes(StandardCharsets.UTF_8));
+        inputReader = new InputReader(new BufferedReader( new InputStreamReader(stream)));
+        request = requestHandler.readRequest(inputReader.readInput());
+        response = serviceRegistry.generateResponse(request);
+        Assert.assertNotNull(response);
     }
 }
