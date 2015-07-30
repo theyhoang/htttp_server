@@ -1,5 +1,6 @@
 package com.ticketmaster.server.response;
 
+import com.ticketmaster.server.model.Method;
 import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
 
@@ -7,18 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by yen.hoang on 7/16/15.
+ * Created by yen.hoang on 7/30/15.
  */
-public class RedirectServiceHandler implements ServiceHandler{
+public class MethodOptionsServiceHandler implements ServiceHandler{
     @Override public Response GET(Request request) {
-        Response response = new Response();
-        response.setHttpVersion(HTTP_VERSION);
-        response.setStatusCode(Response.STATUS_CODE_FOUND);
-        String location = "Location: http://localhost:5000/";
-        List<String> headers = new ArrayList<String>();
-        headers.add(location);
-        response.setHeaders(headers);
-        return response;
+        return null;
     }
 
     @Override public Response PUT(Request request) {
@@ -38,6 +32,20 @@ public class RedirectServiceHandler implements ServiceHandler{
     }
 
     @Override public Response OPTIONS(Request request) {
-        return null;
+        Response response = new Response();
+
+        String methodsAllowed = "GET,HEAD,POST,OPTIONS,PUT";
+        
+        methodsAllowed = "Allow: " + methodsAllowed;
+//        System.out.println(methodsAllowed);
+        response.setStatusCode(Response.STATUS_CODE_OK);
+        response.setHttpVersion(HTTP_VERSION);
+
+
+        List<String> headers = new ArrayList<String>();
+        headers.add(methodsAllowed);
+        response.setHeaders(headers);
+
+        return response;
     }
 }

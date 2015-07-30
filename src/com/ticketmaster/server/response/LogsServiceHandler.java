@@ -85,4 +85,8 @@ public class LogsServiceHandler implements ServiceHandler {
     @Override public Response HEAD(Request request) {
         return null;
     }
+
+    @Override public Response OPTIONS(Request request) {
+        return null;
+    }
 }

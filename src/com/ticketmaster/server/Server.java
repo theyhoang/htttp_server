@@ -73,7 +73,7 @@ public class Server extends Thread{
         serviceRegistry.registerServiceHandler("/form", new FormServiceHandler());
         serviceRegistry.registerServiceHandler("/redirect", new RedirectServiceHandler());
         serviceRegistry.registerServiceHandler("/logs", new LogsServiceHandler());
-
+        serviceRegistry.registerServiceHandler("/method_options", new MethodOptionsServiceHandler());
         serviceRegistry.setDefaultServiceHandler(new FileServiceHandler());
 
         return serviceRegistry;

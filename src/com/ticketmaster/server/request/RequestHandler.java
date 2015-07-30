@@ -34,6 +34,7 @@ public class RequestHandler {
                 requestFactory = new DeleteRequestFactory();
                 break;
             case OPTIONS:
+                requestFactory = new OptionsRequestFactory();
                 break;
             case HEAD:
                 requestFactory = new HeadRequestFactory();
