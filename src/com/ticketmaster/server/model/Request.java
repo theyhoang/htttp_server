@@ -14,6 +14,7 @@ public class Request {
     private String userAgent;
     private String httpVersion;
     private List<String> headers;
+    private List<String> parameters;
 
     public Method getHttpMethod() {
         return httpMethod;
@@ -61,5 +62,13 @@ public class Request {
 
     public void setHeaders(List<String> headers) {
         this.headers = headers;
+    }
+
+    public void setParameters(List<String> parameters) {
+        this.parameters = parameters;
+    }
+
+    public List<String> getParameters() {
+        return parameters;
     }
 }
