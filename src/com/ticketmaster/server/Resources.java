@@ -12,6 +12,7 @@ import java.util.Map;
 
 public class Resources {
 
+    // TODO: synchronization
     public static HashMap<String, String> data = new HashMap<String, String>();
     public static List<String> logs = new ArrayList<>();
 

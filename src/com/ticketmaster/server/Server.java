@@ -91,7 +91,7 @@ public class Server extends Thread{
 
             while (true) {
                 clientSocket = serverSocket.accept();
-
+                // TODO: spawn a new thread
                 BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()) );
                 InputReader inputReader = new InputReader(in);
                 List<String> input = inputReader.readInput();
@@ -114,6 +114,7 @@ public class Server extends Thread{
                 outputWriter.outputResponse(response);
 
                 clientSocket.close();
+                // TODO: close thread
             }
 
         } catch (IOException e) {
