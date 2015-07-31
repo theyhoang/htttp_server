@@ -3,7 +3,10 @@ package com.ticketmaster.server.response;
 import com.ticketmaster.server.FileUtils;
 import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
+import org.apache.commons.codec.digest.DigestUtils;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -137,5 +140,78 @@ public class FileServiceHandler implements ServiceHandler{
 
     @Override public Response OPTIONS(Request request) {
         return null;
+    }
+
+    @Override public Response PATCH(Request request) {
+        Response response = new Response();
+
+        if (!FileUtils.resourceExistsInPath(request.getUrl())) {
+            //check if file exists, if not 404
+            response.setStatusCode(Response.STATUS_CODE_NOT_FOUND);
+        }
+
+        response.setHttpVersion(HTTP_VERSION);
+
+        boolean doesContainEtagHeader = containsEtagHeader(request.getHeaders());
+        if (!doesContainEtagHeader) {
+            // TODO: malformed request
+            response.setStatusCode(Response.STATUS_CODE_BAD_REQUEST);
+        }
+
+
+        //if exists update file with message, return 204, and etag
+        if (response.getStatusCode() != Response.STATUS_CODE_NOT_FOUND && doesContainEtagHeader) {
+            // get original etag
+            String originalFileContent = new String(FileUtils.getFileContent(request.getUrl()));
+            String originalEtag = DigestUtils.sha1Hex(originalFileContent);
+
+            // check against etag from request header
+            // If-Match: "e0023aa4e"
+            String etagFromRequest = retrieveEtagFromRequest(request.getHeaders());
+
+            if (originalEtag.equals(etagFromRequest)) {
+
+                try {
+                    FileUtils.updateFile(request.getUrl(), request.getMessage());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                // then retrieve etag, return etag in header
+                String etag = DigestUtils.sha1Hex(request.getMessage());
+
+                List<String> headers = new ArrayList<String>();
+                headers.add("Etag: \"" + etag + "\"");
+                response.setHeaders(headers);
+                response.setStatusCode(Response.STATUS_CODE_NO_CONTENT);
+            } else {
+                response.setStatusCode(Response.STATUS_CODE_BAD_REQUEST);
+            }
+        }
+
+
+        return response;
+    }
+
+    private boolean containsEtagHeader(List<String> headers) {
+        for (String header : headers) {
+            if (header.startsWith("If-Match: ")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String retrieveEtagFromRequest(List<String> headers) {
+        String etagHeader = null;
+        for (String header : headers) {
+            if (header.startsWith("If-Match: ")) {
+                etagHeader = header;
+                break;
+            }
+        }
+
+        String etag = etagHeader.split(" ")[1];
+        etag = etag.replace("\"", "");
+        return etag;
     }
 }

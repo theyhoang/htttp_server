@@ -51,4 +51,8 @@ public class FormServiceHandler implements ServiceHandler{
     @Override public Response OPTIONS(Request request) {
         return null;
     }
+
+    @Override public Response PATCH(Request request) {
+        return null;
+    }
 }

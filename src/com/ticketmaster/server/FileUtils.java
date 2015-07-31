@@ -2,8 +2,7 @@ package com.ticketmaster.server;
 
 import com.google.common.io.Files;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Created by yen.hoang on 5/8/15.
@@ -64,6 +63,13 @@ public class FileUtils {
             e.printStackTrace();
         }
         return content;
+    }
+
+    public static void updateFile(String path, String message) throws IOException {
+        File file = new File(publicDirPath + path);
+        Writer output = new BufferedWriter(new FileWriter(file, false));
+        output.write(message);
+        output.close();
     }
 
     public static void deleteFile(String path) {

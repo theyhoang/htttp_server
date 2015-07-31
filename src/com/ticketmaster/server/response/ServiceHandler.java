@@ -21,4 +21,6 @@ public interface ServiceHandler {
     Response HEAD(Request request);
 
     Response OPTIONS(Request request);
+
+    Response PATCH(Request request);
 }

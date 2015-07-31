@@ -4,6 +4,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -48,5 +49,11 @@ public class FileUtilsTest {
     @Test
     public void testFileContent() {
         Assert.assertNotNull(FileUtils.getFileContent("/file1"));
+    }
+
+    @Test
+    public void testUpdateFile() throws IOException {
+        Assert.assertTrue(FileUtils.isFile("/test.txt"));
+        FileUtils.updateFile("/test.txt", "test123");
     }
 }

@@ -175,6 +175,42 @@ public class RequestHandlerTest {
         Assert.assertNotNull(response);
     }
 
+
+
+    @Test
+    public void testPatchRequest() throws IOException {
+//        PATCH /file.txt HTTP/1.1
+//        Host: www.example.com
+//        Content-type: application/example
+//        If-Match: "e0023aa4e"
+//        Content-Length: 100
+
+        URL url = getClass().getClassLoader().getResource("./");
+        FileUtils.publicDirPath = url.getPath();
+        String message = "patched content";
+        String testRequestString = "PATCH /test.txt HTTP/1.1\r\n";
+        testRequestString += "User-Agent: curl/7.41.0\r\n";
+        testRequestString += "Host: localhost:9090\r\n";
+        testRequestString += "Content-Length: " + message.getBytes().length + "\r\n";
+        testRequestString += "If-Match: \"dc50a0d27dda2eee9f65644cd7e4c9cf11de8bec\"\r\n";
+        testRequestString += "\r\n";
+        testRequestString += message;
+
+
+        InputStream stream = new ByteArrayInputStream(testRequestString.getBytes(StandardCharsets.UTF_8));
+        InputReader inputReader = new InputReader(new BufferedReader( new InputStreamReader(stream)));
+        RequestHandler requestHandler = new RequestHandler();
+        Request request = requestHandler.readRequest(inputReader.readInput());
+
+        Assert.assertTrue(request.getHttpMethod() == Method.PATCH);
+
+        ServiceRegistry serviceRegistry = ServiceRegistry.initialize();
+        Response response = serviceRegistry.generateResponse(request);
+
+        Assert.assertNotNull(response);
+        // TODO: finish test for response
+    }
+
     @Test
     public void testDecodeParameters() throws IOException {
         String path = "/parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff";

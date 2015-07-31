@@ -45,6 +45,9 @@ public class ServiceRegistry {
                 case OPTIONS:
                     response = serviceHandler.OPTIONS(request);
                     break;
+                case PATCH:
+                    response = serviceHandler.PATCH(request);
+                    break;
                 default:
                     break;
             }

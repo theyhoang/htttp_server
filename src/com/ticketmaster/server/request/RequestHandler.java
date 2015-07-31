@@ -29,6 +29,7 @@ public class RequestHandler {
                 requestFactory = new PostRequestFactory();
                 break;
             case PATCH:
+                requestFactory = new PatchRequestFactory();
                 break;
             case DELETE:
                 requestFactory = new DeleteRequestFactory();

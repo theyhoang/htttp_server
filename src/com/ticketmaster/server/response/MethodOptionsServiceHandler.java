@@ -48,4 +48,8 @@ public class MethodOptionsServiceHandler implements ServiceHandler{
 
         return response;
     }
+
+    @Override public Response PATCH(Request request) {
+        return null;
+    }
 }
