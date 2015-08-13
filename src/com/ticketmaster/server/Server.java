@@ -17,6 +17,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.*;
 
 /**
  * Created by yen.hoang on 3/5/15.
@@ -78,10 +79,12 @@ public class Server extends Thread{
 
     public void startServer() {
         Socket clientSocket = null;
+        final int NUMBER_OF_THREADS = 50;
 
         try {
 
-
+            ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS) ;
+//            ExecutorService executor = Executors.newCachedThreadPool();
 
 //            requestHandler.start();
             serverSocket = new ServerSocket(portNumber);
@@ -91,30 +94,18 @@ public class Server extends Thread{
 
             while (true) {
                 clientSocket = serverSocket.accept();
-                // TODO: spawn a new thread
-                BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()) );
-                InputReader inputReader = new InputReader(in);
-                List<String> input = inputReader.readInput();
-                if (input.isEmpty()) {
-                    continue;
-                }
 
-                RequestHandler requestHandler = new RequestHandler();
-
-                Request request = requestHandler.readRequest(input);
-
-                DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
-
-//                ResponseHandler responseHandler = new ResponseHandler();
-                OutputWriter outputWriter = new OutputWriter(out);
-
-                // TODO: based on type of request, have factory generate appropriate response handler
-//                Response response = responseHandler.getResponse(request);
-                Response response = serviceRegistry.generateResponse(request);
-                outputWriter.outputResponse(response);
-
-                clientSocket.close();
-                // TODO: close thread
+                final Socket finalClientSocket = clientSocket;
+                executor.submit(new Runnable() {
+                    @Override public void run() {
+                        try {
+                            processRequest(finalClientSocket);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                });
             }
 
         } catch (IOException e) {
@@ -124,6 +115,31 @@ public class Server extends Thread{
 
 
 
+    }
+
+    private void processRequest(Socket clientSocket) throws IOException {
+        BufferedReader in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()) );
+        InputReader inputReader = new InputReader(in);
+        List<String> input = inputReader.readInput();
+
+        RequestHandler requestHandler = new RequestHandler();
+
+        Request request = requestHandler.readRequest(input);
+        if (input.isEmpty()) {
+            return;
+        }
+
+        DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
+
+        //                ResponseHandler responseHandler = new ResponseHandler();
+        OutputWriter outputWriter = new OutputWriter(out);
+
+        // TODO: based on type of request, have factory generate appropriate response handler
+        //                Response response = responseHandler.getResponse(request);
+        Response response = serviceRegistry.generateResponse(request);
+        outputWriter.outputResponse(response);
+
+        clientSocket.close();
     }
 
 }
