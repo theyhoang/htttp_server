@@ -79,12 +79,12 @@ public class Server extends Thread{
 
     public void startServer() {
         Socket clientSocket = null;
-        final int NUMBER_OF_THREADS = 50;
+        final int NUMBER_OF_THREADS = 100;
 
         try {
 
-            ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS) ;
-//            ExecutorService executor = Executors.newCachedThreadPool();
+//            ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS) ;
+            ExecutorService executor = Executors.newCachedThreadPool();
 
 //            requestHandler.start();
             serverSocket = new ServerSocket(portNumber);

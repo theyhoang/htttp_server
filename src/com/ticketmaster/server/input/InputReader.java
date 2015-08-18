@@ -31,8 +31,8 @@ public class InputReader {
                     String len = userInput.substring(index).trim();
                     length = Integer.parseInt(len);
                 }
-
-                System.out.println(userInput);
+                //TODO: this was blocking
+//                System.out.println(userInput);
                 inputList.add(userInput);
                 if (userInput.isEmpty()) {
                     break;

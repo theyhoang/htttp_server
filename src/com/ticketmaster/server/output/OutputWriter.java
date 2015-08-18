@@ -21,6 +21,7 @@ public class OutputWriter {
     public void outputResponse(Response response) {
         // write out response
         try {
+            // TODO: blocked here
             outputStream.write(response.getInitialResponseLine().getBytes());
             if (response.getHeaders() != null) {
                 for (String header : response.getHeaders()) {
@@ -42,8 +43,9 @@ public class OutputWriter {
                 outputStream.write(response.getMessage());
                 outputStream.write(CRLF.getBytes());
             }
-            outputStream.flush();
-            outputStream.close();
+            // TODO: blocked here
+//            outputStream.flush();
+//            outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
