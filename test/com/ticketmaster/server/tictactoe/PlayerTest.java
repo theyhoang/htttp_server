@@ -1,5 +1,7 @@
 package com.ticketmaster.server.tictactoe;
 
+import com.ticketmaster.server.tictactoe.input.Input;
+import com.ticketmaster.server.tictactoe.input.ScannerInput;
 import com.ticketmaster.server.tictactoe.player.ComputerPlayer;
 import com.ticketmaster.server.tictactoe.player.HumanPlayer;
 import com.ticketmaster.server.tictactoe.player.Player;
@@ -68,15 +70,15 @@ public class PlayerTest {
         Assert.assertEquals(3, choice);
     }
 
-//    @Test
-//    public void testPickSpot_Human() throws Exception {
-//        String input = "1 2 3";
-//        InputStream is = new ByteArrayInputStream(input.getBytes());
-//        Input in = new ScannerInput(is);
-//        humanPlayer = new HumanPlayer(in);
-//
-//        Assert.assertEquals(1, humanPlayer.pickSpot());
-//        Assert.assertEquals(2, humanPlayer.pickSpot());
-//        Assert.assertEquals(3, humanPlayer.pickSpot());
-//    }
+    @Test
+    public void testPickSpot_Human() throws Exception {
+        String input = "1 2 3";
+        InputStream is = new ByteArrayInputStream(input.getBytes());
+        Input in = new ScannerInput(is);
+        humanPlayer = new HumanPlayer(in);
+
+        Assert.assertEquals(1, humanPlayer.pickSpot());
+        Assert.assertEquals(2, humanPlayer.pickSpot());
+        Assert.assertEquals(3, humanPlayer.pickSpot());
+    }
 }
