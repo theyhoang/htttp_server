@@ -7,6 +7,7 @@ import com.ticketmaster.server.model.Response;
 import com.ticketmaster.server.output.OutputWriter;
 import com.ticketmaster.server.request.RequestHandler;
 import com.ticketmaster.server.response.*;
+import com.ticketmaster.server.tictactoe.TicTacToeApp;
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -26,17 +27,19 @@ public class Server extends Thread{
 
     private static ServerSocket serverSocket;
 
-        @Option(name = "-p", usage = "port number")
-        private int portNumber = 5000;
+    @Option(name = "-p", usage = "port number")
+    private int portNumber = 5000;
 
-        @Option(name = "-d", usage = "path to public directory")
-        private String publicDirPath = "";
+    @Option(name = "-d", usage = "path to public directory")
+    private String publicDirPath = "";
 
-        // receives other command line parameters than options
-        @Argument
-        private List<String> arguments = new ArrayList();
+    // receives other command line parameters than options
+    @Argument
+    private List<String> arguments = new ArrayList();
 
     private ServiceRegistry serviceRegistry;
+
+    private TicTacToeApp ticTacToeApp;
 
 
     public static void main(String[] args) {
@@ -65,12 +68,14 @@ public class Server extends Thread{
         // TODO: register each of service handler, set default service handler
         serviceRegistry = initializeServiceRegistry();
 
+
+        ticTacToeApp = new TicTacToeApp();
         // Start server here
         startServer();
     }
 
     public ServiceRegistry initializeServiceRegistry() {
-        return ServiceRegistry.initialize();
+        return ServiceRegistry.initialize(ticTacToeApp);
     }
 
     public void run() {

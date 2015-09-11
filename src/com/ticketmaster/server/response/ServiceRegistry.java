@@ -2,6 +2,7 @@ package com.ticketmaster.server.response;
 
 import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
+import com.ticketmaster.server.tictactoe.TicTacToeApp;
 
 import java.util.HashMap;
 
@@ -73,13 +74,15 @@ public class ServiceRegistry {
         serviceHandlerMap.put(pattern, serviceHandler);
     }
 
-    public static ServiceRegistry initialize() {
+    public static ServiceRegistry initialize(TicTacToeApp ticTacToeApp) {
         ServiceRegistry serviceRegistry = new ServiceRegistry();
         serviceRegistry.registerServiceHandler("/form", new FormServiceHandler());
         serviceRegistry.registerServiceHandler("/redirect", new RedirectServiceHandler());
         serviceRegistry.registerServiceHandler("/logs", new LogsServiceHandler());
         serviceRegistry.registerServiceHandler("/method_options", new MethodOptionsServiceHandler());
         serviceRegistry.registerServiceHandler("/parameters", new ParametersServiceHandler());
+        serviceRegistry.registerServiceHandler("/game", new GameServiceHandler(ticTacToeApp));
+        // TODO: MoveServiceHandler
         serviceRegistry.setDefaultServiceHandler(new FileServiceHandler());
 
         return serviceRegistry;
