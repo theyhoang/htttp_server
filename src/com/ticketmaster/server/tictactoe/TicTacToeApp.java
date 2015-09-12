@@ -11,11 +11,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class TicTacToeApp {
 
-    private List<GameManager> gameManagers = new ArrayList<GameManager>();
-    private final AtomicInteger counter = new AtomicInteger();
-    private List<GameBoard> gameBoards = new ArrayList<GameBoard>();
+    private static List<GameManager> gameManagers = new ArrayList<GameManager>();
+    private static AtomicInteger counter = new AtomicInteger();
+    private static List<GameBoard> gameBoards = new ArrayList<GameBoard>();
 
-    public GameBoard addNewGame() {
+    public static GameBoard addNewGame() {
         GameBoard newGame = new GameBoard(counter.incrementAndGet());
         gameBoards.add(newGame);
         gameManagers.add(new GameManager(true, newGame));

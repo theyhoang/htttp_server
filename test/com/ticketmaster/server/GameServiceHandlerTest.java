@@ -15,7 +15,7 @@ public class GameServiceHandlerTest {
 
     @Test
     public void testPOSTGameEndpoint() {
-        ServiceRegistry serviceRegistry = ServiceRegistry.initialize(new TicTacToeApp());
+        ServiceRegistry serviceRegistry = ServiceRegistry.initialize();
 
         Request request = new Request();
         request.setHttpVersion("HTTP/1.1");

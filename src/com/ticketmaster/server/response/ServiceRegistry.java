@@ -27,6 +27,7 @@ public class ServiceRegistry {
 
         ServiceHandler serviceHandler = getServiceHandler(request.getUrl());
         Response response = null;
+        System.out.println("serviceHandler: " + serviceHandler.getClass().getName());
             switch (request.getHttpMethod()) {
                 case GET:
                     response = serviceHandler.GET(request);
@@ -59,6 +60,7 @@ public class ServiceRegistry {
             response.setHttpVersion(ServiceHandler.HTTP_VERSION);
             response.setStatusCode(Response.STATUS_CODE_METHOD_NOT_ALLOWED);
         }
+        System.out.println("Response generated");
         return response;
     }
 
@@ -74,20 +76,6 @@ public class ServiceRegistry {
         serviceHandlerMap.put(pattern, serviceHandler);
     }
 
-    public static ServiceRegistry initialize(TicTacToeApp ticTacToeApp) {
-        ServiceRegistry serviceRegistry = new ServiceRegistry();
-        serviceRegistry.registerServiceHandler("/form", new FormServiceHandler());
-        serviceRegistry.registerServiceHandler("/redirect", new RedirectServiceHandler());
-        serviceRegistry.registerServiceHandler("/logs", new LogsServiceHandler());
-        serviceRegistry.registerServiceHandler("/method_options", new MethodOptionsServiceHandler());
-        serviceRegistry.registerServiceHandler("/parameters", new ParametersServiceHandler());
-        serviceRegistry.registerServiceHandler("/game", new GameServiceHandler(ticTacToeApp));
-        // TODO: MoveServiceHandler
-        serviceRegistry.setDefaultServiceHandler(new FileServiceHandler());
-
-        return serviceRegistry;
-    }
-
     public static ServiceRegistry initialize() {
         ServiceRegistry serviceRegistry = new ServiceRegistry();
         serviceRegistry.registerServiceHandler("/form", new FormServiceHandler());
@@ -96,6 +84,7 @@ public class ServiceRegistry {
         serviceRegistry.registerServiceHandler("/method_options", new MethodOptionsServiceHandler());
         serviceRegistry.registerServiceHandler("/parameters", new ParametersServiceHandler());
         serviceRegistry.setDefaultServiceHandler(new FileServiceHandler());
+        serviceRegistry.registerServiceHandler("/game", new GameServiceHandler());
 
         return serviceRegistry;
     }

@@ -18,6 +18,7 @@ public class RequestHandler {
 
         // get requestfactory based on method type
         RequestFactory requestFactory = null;
+        System.out.println("Request method type: " + methodType.name());
         switch(methodType) {
             case GET:
                 requestFactory = new GetRequestFactory();
@@ -48,6 +49,7 @@ public class RequestHandler {
         // add log and generate request
         Resources.addLog(inputList.get(0));
         Request request = requestFactory.generateRequest(inputList);
+        System.out.println("Request generated");
 
         return request;
     }

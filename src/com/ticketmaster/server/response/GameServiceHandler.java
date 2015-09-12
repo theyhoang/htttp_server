@@ -10,11 +10,6 @@ import com.ticketmaster.server.tictactoe.TicTacToeApp;
  * Created by yen.hoang on 9/10/15.
  */
 public class GameServiceHandler implements ServiceHandler{
-    private TicTacToeApp ticTacToeApp;
-
-    GameServiceHandler(TicTacToeApp ticTacToeApp) {
-       this.ticTacToeApp = ticTacToeApp;
-    }
 
     @Override public Response GET(Request request) {
         return null;
@@ -29,7 +24,7 @@ public class GameServiceHandler implements ServiceHandler{
         response.setHttpVersion(HTTP_VERSION);
 
         // add new game
-        GameBoard game = ticTacToeApp.addNewGame();
+        GameBoard game = TicTacToeApp.addNewGame();
         // put game into message
         response.setStatusCode(Response.STATUS_CODE_OK);
         response.setMessage((GameUtils.printGame(game)).getBytes());

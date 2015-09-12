@@ -39,8 +39,6 @@ public class Server extends Thread{
 
     private ServiceRegistry serviceRegistry;
 
-    private TicTacToeApp ticTacToeApp;
-
 
     public static void main(String[] args) {
         new Server().doMain(args);
@@ -69,13 +67,12 @@ public class Server extends Thread{
         serviceRegistry = initializeServiceRegistry();
 
 
-        ticTacToeApp = new TicTacToeApp();
         // Start server here
         startServer();
     }
 
     public ServiceRegistry initializeServiceRegistry() {
-        return ServiceRegistry.initialize(ticTacToeApp);
+        return ServiceRegistry.initialize();
     }
 
     public void run() {

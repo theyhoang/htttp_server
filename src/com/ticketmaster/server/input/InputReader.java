@@ -32,14 +32,14 @@ public class InputReader {
                     length = Integer.parseInt(len);
                 }
                 //TODO: this was blocking
-//                System.out.println(userInput);
+                System.out.println(userInput);
                 inputList.add(userInput);
                 if (userInput.isEmpty()) {
                     break;
                 }
             }
             if (hasMessage) {
-//                System.out.println("READING MESSAGE");
+                System.out.println("READING MESSAGE");
                 // if there is Message body, go in to this loop
                 StringBuilder body = new StringBuilder();
                 if (length > 0) {
