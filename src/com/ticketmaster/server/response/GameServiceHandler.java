@@ -2,6 +2,8 @@ package com.ticketmaster.server.response;
 
 import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
+import com.ticketmaster.server.tictactoe.GameBoard;
+import com.ticketmaster.server.tictactoe.GameUtils;
 import com.ticketmaster.server.tictactoe.TicTacToeApp;
 
 /**
@@ -23,7 +25,16 @@ public class GameServiceHandler implements ServiceHandler{
     }
 
     @Override public Response POST(Request request) {
-        return null;
+        Response response = new Response();
+        response.setHttpVersion(HTTP_VERSION);
+
+        // add new game
+        GameBoard game = ticTacToeApp.addNewGame();
+        // put game into message
+        response.setStatusCode(Response.STATUS_CODE_OK);
+        response.setMessage((GameUtils.printGame(game)).getBytes());
+        // return empty game object with new game_id?
+        return response;
     }
 
     @Override public Response DELETE(Request request) {

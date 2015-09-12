@@ -15,10 +15,11 @@ public class TicTacToeApp {
     private final AtomicInteger counter = new AtomicInteger();
     private List<GameBoard> gameBoards = new ArrayList<GameBoard>();
 
-    public void newGame() {
+    public GameBoard addNewGame() {
         GameBoard newGame = new GameBoard(counter.incrementAndGet());
         gameBoards.add(newGame);
         gameManagers.add(new GameManager(true, newGame));
+        return newGame;
     }
 
     public GameBoard pickSpot(int game_id, int spot) {
@@ -35,6 +36,15 @@ public class TicTacToeApp {
         for (GameManager manager : gameManagers) {
             if (game_id == manager.getGameBoard().getGame_id()) {
                 return manager;
+            }
+        }
+        return null;
+    }
+
+    public GameBoard retrieveGame(int gameId) {
+        for (GameBoard gameBoard : gameBoards) {
+            if (gameBoard.getGame_id() == gameId) {
+                return  gameBoard;
             }
         }
         return null;

@@ -87,4 +87,16 @@ public class ServiceRegistry {
 
         return serviceRegistry;
     }
+
+    public static ServiceRegistry initialize() {
+        ServiceRegistry serviceRegistry = new ServiceRegistry();
+        serviceRegistry.registerServiceHandler("/form", new FormServiceHandler());
+        serviceRegistry.registerServiceHandler("/redirect", new RedirectServiceHandler());
+        serviceRegistry.registerServiceHandler("/logs", new LogsServiceHandler());
+        serviceRegistry.registerServiceHandler("/method_options", new MethodOptionsServiceHandler());
+        serviceRegistry.registerServiceHandler("/parameters", new ParametersServiceHandler());
+        serviceRegistry.setDefaultServiceHandler(new FileServiceHandler());
+
+        return serviceRegistry;
+    }
 }
