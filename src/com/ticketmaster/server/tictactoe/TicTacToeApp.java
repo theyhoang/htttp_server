@@ -22,6 +22,10 @@ public class TicTacToeApp {
         return newGame;
     }
 
+    public static List<GameBoard> retrieveAllGames() {
+        return gameBoards;
+    }
+
     public GameBoard pickSpot(int game_id, int spot) {
         GameManager manager = retrieveGameManager(game_id);
         manager.pickSpot(spot, PlayerType.HUMAN);
@@ -41,7 +45,7 @@ public class TicTacToeApp {
         return null;
     }
 
-    public GameBoard retrieveGame(int gameId) {
+    public static GameBoard retrieveGame(int gameId) {
         for (GameBoard gameBoard : gameBoards) {
             if (gameBoard.getGame_id() == gameId) {
                 return  gameBoard;

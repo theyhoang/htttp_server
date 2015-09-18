@@ -16,11 +16,25 @@ public class ServiceRegistry {
 
     public ServiceHandler getServiceHandler(String path) {
 
+        // check path has resource IDs
+        if (hasResourceIds(path)) {
+            // derive proper path
+            int lastIdx = path.lastIndexOf("/");
+            path = path.substring(0, lastIdx);
+        }
+
         ServiceHandler serviceHandler = serviceHandlerMap.get(path);
         if (serviceHandler == null) {
             serviceHandler = defaultServiceHandler;
         }
         return serviceHandler;
+    }
+
+    private boolean hasResourceIds(String path) {
+        if (path.indexOf("/") != path.lastIndexOf("/")) {
+            return true;
+        }
+        return false;
     }
 
     public Response generateResponse(Request request) {
