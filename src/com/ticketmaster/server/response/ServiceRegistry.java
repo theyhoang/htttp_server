@@ -2,7 +2,6 @@ package com.ticketmaster.server.response;
 
 import com.ticketmaster.server.model.Request;
 import com.ticketmaster.server.model.Response;
-import com.ticketmaster.server.tictactoe.TicTacToeApp;
 
 import java.util.HashMap;
 
@@ -98,7 +97,8 @@ public class ServiceRegistry {
         serviceRegistry.registerServiceHandler("/method_options", new MethodOptionsServiceHandler());
         serviceRegistry.registerServiceHandler("/parameters", new ParametersServiceHandler());
         serviceRegistry.setDefaultServiceHandler(new FileServiceHandler());
-        serviceRegistry.registerServiceHandler("/games", new GameServiceHandler());
+        serviceRegistry.registerServiceHandler("/games", new GamesServiceHandler());
+        serviceRegistry.registerServiceHandler("/moves", new MovesServiceHandler());
 
         return serviceRegistry;
     }

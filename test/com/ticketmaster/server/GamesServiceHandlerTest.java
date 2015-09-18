@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Created by yen.hoang on 9/11/15.
  */
-public class GameServiceHandlerTest {
+public class GamesServiceHandlerTest {
 
     @Test
     public void testPOSTGameEndpoint() {

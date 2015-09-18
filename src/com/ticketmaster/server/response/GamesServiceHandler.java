@@ -9,7 +9,7 @@ import com.ticketmaster.server.tictactoe.TicTacToeApp;
 /**
  * Created by yen.hoang on 9/10/15.
  */
-public class GameServiceHandler implements ServiceHandler{
+public class GamesServiceHandler implements ServiceHandler{
 
     @Override public Response GET(Request request) {
         Response response = new Response();
