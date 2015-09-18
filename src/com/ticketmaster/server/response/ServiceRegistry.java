@@ -84,7 +84,7 @@ public class ServiceRegistry {
         serviceRegistry.registerServiceHandler("/method_options", new MethodOptionsServiceHandler());
         serviceRegistry.registerServiceHandler("/parameters", new ParametersServiceHandler());
         serviceRegistry.setDefaultServiceHandler(new FileServiceHandler());
-        serviceRegistry.registerServiceHandler("/game", new GameServiceHandler());
+        serviceRegistry.registerServiceHandler("/games", new GameServiceHandler());
 
         return serviceRegistry;
     }

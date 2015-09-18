@@ -20,7 +20,7 @@ public class GameServiceHandlerTest {
         Request request = new Request();
         request.setHttpVersion("HTTP/1.1");
         request.setHttpMethod(Method.POST);
-        request.setUrl("/game");
+        request.setUrl("/games");
 
         Assert.assertNotNull(request);
 
@@ -36,7 +36,7 @@ public class GameServiceHandlerTest {
         Request request2 = new Request();
         request2.setHttpVersion("HTTP/1.1");
         request2.setHttpMethod(Method.POST);
-        request2.setUrl("/game");
+        request2.setUrl("/games");
 
         Assert.assertNotNull(request);
 
