@@ -40,6 +40,7 @@ public class GamesServiceHandler implements ServiceHandler{
     }
 
     @Override public Response POST(Request request) {
+        // TODO: take in parameter to differentiate between human/computer player
         Response response = new Response();
         response.setHttpVersion(HTTP_VERSION);
 

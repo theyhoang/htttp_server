@@ -26,7 +26,7 @@ public class TicTacToeApp {
         return gameBoards;
     }
 
-    public GameBoard pickSpot(int game_id, int spot) {
+    public static GameBoard pickSpot(int game_id, int spot) {
         GameManager manager = retrieveGameManager(game_id);
         manager.pickSpot(spot, PlayerType.HUMAN);
         if (!manager.checkForEndOfGame(PlayerType.HUMAN) && !manager.checkForEndOfGame(PlayerType.COMPUTER)) {
@@ -36,7 +36,7 @@ public class TicTacToeApp {
         return manager.getGameBoard();
     }
 
-    private GameManager retrieveGameManager(int game_id) {
+    private static GameManager retrieveGameManager(int game_id) {
         for (GameManager manager : gameManagers) {
             if (game_id == manager.getGameBoard().getGame_id()) {
                 return manager;

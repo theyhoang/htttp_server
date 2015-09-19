@@ -36,7 +36,7 @@ public class MovesServiceHandlerTest {
         request2.setHttpVersion("HTTP/1.1");
         request2.setHttpMethod(Method.POST);
         request2.setUrl("/moves/1");
-        request2.setMessage("\"spot\":1");
+        request2.setMessage("{\"spot_id\":1}");
 
         Assert.assertNotNull(request2);
 
@@ -45,8 +45,8 @@ public class MovesServiceHandlerTest {
         Assert.assertEquals(response2.getStatusCode(), Response.STATUS_CODE_OK);
 
         String message2 = new String(response2.getMessage());
-        Assert.assertEquals(message2, "{\"game_id\":2,\"occupiedMap\":[[false,true,false],[false,false,false],[false,false,false]],"
-            + "\"markerMap\":[\" X \",\"   \",\"   \"]}");
+        Assert.assertEquals(message2, "{\"game_id\":1,\"occupiedMap\":[[true,false,false],[false,true,false],[false,false,false]],"
+            + "\"markerMap\":[\"X  \",\" O \",\"   \"]}");
 
 
     }
