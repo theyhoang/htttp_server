@@ -54,4 +54,10 @@ public class TicTacToeApp {
         return null;
     }
 
+    public static void reset() {
+        gameBoards.clear();
+        gameManagers.clear();
+        counter.set(0);
+    }
+
 }

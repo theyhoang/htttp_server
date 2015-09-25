@@ -16,11 +16,9 @@ public class ServiceRegistry {
     public ServiceHandler getServiceHandler(String path) {
 
         ServiceHandler serviceHandler;
-        if (path.startsWith("/games")) {
+        if (path.equals("/games") || path.startsWith("/games/")) {
             serviceHandler = serviceHandlerMap.get("/games");
-        }  else if (path.startsWith("/moves")) {
-            serviceHandler = serviceHandlerMap.get("/moves");
-        }
+        } 
         else {
             serviceHandler = serviceHandlerMap.get(path);
         }
@@ -93,7 +91,6 @@ public class ServiceRegistry {
         serviceRegistry.registerServiceHandler("/parameters", new ParametersServiceHandler());
         serviceRegistry.setDefaultServiceHandler(new FileServiceHandler());
         serviceRegistry.registerServiceHandler("/games", new GamesServiceHandler());
-        serviceRegistry.registerServiceHandler("/moves", new MovesServiceHandler());
 
         return serviceRegistry;
     }

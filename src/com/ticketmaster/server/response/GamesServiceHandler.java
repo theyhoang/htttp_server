@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * Created by yen.hoang on 9/10/15.
  */
+
 public class GamesServiceHandler implements ServiceHandler{
 
     // /games
@@ -24,7 +25,10 @@ public class GamesServiceHandler implements ServiceHandler{
 
         // figure out if we get single or multiple games
 
-        if (isValidEndpointForAllGames(request.getUrl())) {
+        // get all games - games
+        // get single - games/{game_id}
+        // TODO: get spot_id info games/{game_id}/spot
+        if (isValidEndpointGames(request.getUrl())) {
             response.setStatusCode(Response.STATUS_CODE_OK);
             response.setMessage((GameUtils.printAllGames(TicTacToeApp.retrieveAllGames())).getBytes());
         } else if (isValidEndpointForSingleGame(request.getUrl())) {
@@ -50,19 +54,36 @@ public class GamesServiceHandler implements ServiceHandler{
 
     // POST games/
     // POST games/{game_id}/moves with message
+    // POST games/{game_id}/spots {"spot_id": [1-9]}
     @Override public Response POST(Request request) {
         // TODO: take in parameter to differentiate between human/computer player
         Response response = new Response();
         response.setHttpVersion(HTTP_VERSION);
 
 
+
         // TODO: validate endpoint
-        // add new game
-        GameBoard game = TicTacToeApp.addNewGame();
-        // put game into message
-        response.setStatusCode(Response.STATUS_CODE_OK);
-        response.setMessage((GameUtils.printGame(game)).getBytes());
-        // return empty game object with new game_id?
+
+        if (isValidEndpointGames(request.getUrl())) {
+            // add new game
+            GameBoard game = TicTacToeApp.addNewGame();
+            // put game into message
+            response.setStatusCode(Response.STATUS_CODE_OK);
+            response.setMessage((GameUtils.printGame(game)).getBytes());
+            // return empty game object with new game_id?
+        } else if (isValidEndpointForSpots(request.getUrl())) {
+            int spotId = parseSpotId(request.getMessage());
+            GameBoard game = retrieveGame(request.getUrl());
+            if (spotId != -1 && game != null) {
+                game = TicTacToeApp.pickSpot(game.getGame_id(), spotId);
+                response.setStatusCode(Response.STATUS_CODE_OK);
+                response.setMessage((GameUtils.printGame(game)).getBytes());
+            } else {
+                response.setStatusCode(Response.STATUS_CODE_BAD_REQUEST);
+            }
+        } else {
+            response.setStatusCode(Response.STATUS_CODE_NOT_FOUND);
+        }
         return response;
     }
 
@@ -83,7 +104,7 @@ public class GamesServiceHandler implements ServiceHandler{
     }
 
 
-    private boolean isValidEndpointForAllGames(String path) {
+    private boolean isValidEndpointGames(String path) {
         if (path.equals("/games")) {
             return true;
         } else {
@@ -101,6 +122,7 @@ public class GamesServiceHandler implements ServiceHandler{
 
     private boolean isValidEndpointForSingleGame(String path) {
         // get rid of initial slash /
+        // games/{game_id}
         path = path.substring(1);
         List<String> paths = Arrays.asList(path.split("/"));
         if (paths.size() != 2) {
@@ -110,10 +132,32 @@ public class GamesServiceHandler implements ServiceHandler{
         }
     }
 
+    private boolean isValidEndpointForSpots(String path) {
+        // games/{game_id}/spots
+        path = path.substring(1);
+        List<String> paths = Arrays.asList(path.split("/"));
+        if (paths.size() == 3) {
+            // check if game_id is valid number
+            Integer gameId = null;
+            try {
+                gameId  = Integer.parseInt(paths.get(1));
+            } catch( NumberFormatException nfe) {
+                return false;
+            }
+            if (paths.get(2).equals("spots") && TicTacToeApp.retrieveGame(gameId) != null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private int retrieveGameId(String path) {
-        int lastIdx = path.lastIndexOf("/");
+        path = path.substring(1);// get rid of inital /
+        List<String> paths = Arrays.asList(path.split("/"));
         try {
-            return Integer.parseInt(path.substring(lastIdx + 1));
+            // games/{game_id}
+            return Integer.parseInt(paths.get(1));
         } catch( NumberFormatException nfe) {
             return -1;
         }
@@ -129,15 +173,6 @@ public class GamesServiceHandler implements ServiceHandler{
             return -1;
         }
 
-    }
-
-    private boolean isPostNewGame(String path) {
-        return path.equals("/games");
-    }
-
-    // games/{game_id}/moves
-    private boolean isPostNewMove(String path) {
-        return false;
     }
 
 }
