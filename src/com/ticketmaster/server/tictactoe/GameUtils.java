@@ -1,5 +1,7 @@
 package com.ticketmaster.server.tictactoe;
 
+import com.ticketmaster.server.response.LinkUtils;
+
 import java.util.List;
 
 /**
@@ -23,14 +25,16 @@ public class GameUtils {
         stringBuilder.append("\"").append(markerMap[1][0]).append(markerMap[1][1])
             .append(markerMap[1][2]).append("\",");
         stringBuilder.append("\"").append(markerMap[2][0]).append(markerMap[2][1])
-            .append(markerMap[2][2]).append("\"]}");
+            .append(markerMap[2][2]).append("\"],");
+        stringBuilder.append(LinkUtils.getGameLinks(game));
+        stringBuilder.append("}");
 
         return stringBuilder.toString();
     }
 
     public static String printAllGames(List<GameBoard> games) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("[");
+        stringBuilder.append("{[");
         for (GameBoard game : games) {
             stringBuilder.append("{\"game_id\":").append(game.getGame_id()).append(",");
             boolean[][] occupiedMap = game.getOccupiedMap();
@@ -46,12 +50,14 @@ public class GameUtils {
             stringBuilder.append("\"").append(markerMap[1][0]).append(markerMap[1][1])
                 .append(markerMap[1][2]).append("\",");
             stringBuilder.append("\"").append(markerMap[2][0]).append(markerMap[2][1])
-                .append(markerMap[2][2]).append("\"]}");
+                .append(markerMap[2][2]).append("\"],");
+            stringBuilder.append(LinkUtils.getGameLinks(game));
+            stringBuilder.append("}");
             stringBuilder.append(",");
         }
         int idx = stringBuilder.lastIndexOf(",");
         stringBuilder.deleteCharAt(idx);
-        stringBuilder.append("]");
+        stringBuilder.append("]}");
 
         return stringBuilder.toString();
     }

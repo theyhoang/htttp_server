@@ -28,7 +28,7 @@ public class Server extends Thread{
     private static ServerSocket serverSocket;
 
     @Option(name = "-p", usage = "port number")
-    private int portNumber = 5000;
+    private static int portNumber = 5000;
 
     @Option(name = "-d", usage = "path to public directory")
     private String publicDirPath = "";
@@ -144,4 +144,7 @@ public class Server extends Thread{
         clientSocket.close();
     }
 
+    public static int getPortNumber() {
+        return portNumber;
+    }
 }

@@ -32,7 +32,7 @@ public class GamesServiceHandlerTest {
 
         String message = new String(response.getMessage());
         Assert.assertEquals(message, "{\"game_id\":1,\"occupiedMap\":[[false,false,false],[false,false,false],[false,false,false]],"
-            + "\"markerMap\":[\"   \",\"   \",\"   \"]}");
+            + "\"markerMap\":[\"   \",\"   \",\"   \"],\"links\": [{\"rel\": \"self\",\"href\": \"http://localhost:5000/games/1\"},{\"rel\": \"mark_spot\",\"href\": \"http://localhost:5000/games/1/spots/:spot_id\"}]}");
 
 
         Request request2 = new Request();
@@ -48,7 +48,7 @@ public class GamesServiceHandlerTest {
 
         String message2 = new String(response2.getMessage());
         Assert.assertEquals(message2, "{\"game_id\":2,\"occupiedMap\":[[false,false,false],[false,false,false],[false,false,false]],"
-            + "\"markerMap\":[\"   \",\"   \",\"   \"]}");
+            + "\"markerMap\":[\"   \",\"   \",\"   \"],\"links\": [{\"rel\": \"self\",\"href\": \"http://localhost:5000/games/2\"},{\"rel\": \"mark_spot\",\"href\": \"http://localhost:5000/games/2/spots/:spot_id\"}]}");
 
 
     }
@@ -72,7 +72,7 @@ public class GamesServiceHandlerTest {
         String message = new String(response.getMessage());
         Assert.assertEquals(message,
             "{\"game_id\":1,\"occupiedMap\":[[false,false,false],[false,false,false],[false,false,false]],"
-                + "\"markerMap\":[\"   \",\"   \",\"   \"]}");
+                + "\"markerMap\":[\"   \",\"   \",\"   \"],\"links\": [{\"rel\": \"self\",\"href\": \"http://localhost:5000/games/1\"},{\"rel\": \"mark_spot\",\"href\": \"http://localhost:5000/games/1/spots/:spot_id\"}]}");
         serviceRegistry.generateResponse(request);
 
         Request request2 = new Request();
@@ -86,10 +86,10 @@ public class GamesServiceHandlerTest {
         Assert.assertNotNull(response2);
         Assert.assertEquals(response2.getStatusCode(), Response.STATUS_CODE_OK);
 
-        Assert.assertEquals(new String(response2.getMessage()), "[{\"game_id\":1,\"occupiedMap\":[[false,false,false],[false,false,false],[false,false,false]],"
-            + "\"markerMap\":[\"   \",\"   \",\"   \"]},"
+        Assert.assertEquals(new String(response2.getMessage()), "{[{\"game_id\":1,\"occupiedMap\":[[false,false,false],[false,false,false],[false,false,false]],"
+            + "\"markerMap\":[\"   \",\"   \",\"   \"],\"links\": [{\"rel\": \"self\",\"href\": \"http://localhost:5000/games/1\"},{\"rel\": \"mark_spot\",\"href\": \"http://localhost:5000/games/1/spots/:spot_id\"}]},"
             + "{\"game_id\":2,\"occupiedMap\":[[false,false,false],[false,false,false],[false,false,false]],"
-            + "\"markerMap\":[\"   \",\"   \",\"   \"]}]");
+            + "\"markerMap\":[\"   \",\"   \",\"   \"],\"links\": [{\"rel\": \"self\",\"href\": \"http://localhost:5000/games/2\"},{\"rel\": \"mark_spot\",\"href\": \"http://localhost:5000/games/2/spots/:spot_id\"}]}]}");
     }
 
     @Test
@@ -111,7 +111,7 @@ public class GamesServiceHandlerTest {
         String message = new String(response.getMessage());
         Assert.assertEquals(message,
             "{\"game_id\":1,\"occupiedMap\":[[false,false,false],[false,false,false],[false,false,false]],"
-                + "\"markerMap\":[\"   \",\"   \",\"   \"]}");
+                + "\"markerMap\":[\"   \",\"   \",\"   \"],\"links\": [{\"rel\": \"self\",\"href\": \"http://localhost:5000/games/1\"},{\"rel\": \"mark_spot\",\"href\": \"http://localhost:5000/games/1/spots/:spot_id\"}]}");
         serviceRegistry.generateResponse(request);
 
         Request request2 = new Request();
@@ -164,7 +164,7 @@ public class GamesServiceHandlerTest {
 
         String message = new String(response.getMessage());
         Assert.assertEquals(message, "{\"game_id\":1,\"occupiedMap\":[[false,false,false],[false,false,false],[false,false,false]],"
-            + "\"markerMap\":[\"   \",\"   \",\"   \"]}");
+            + "\"markerMap\":[\"   \",\"   \",\"   \"],\"links\": [{\"rel\": \"self\",\"href\": \"http://localhost:5000/games/1\"},{\"rel\": \"mark_spot\",\"href\": \"http://localhost:5000/games/1/spots/:spot_id\"}]}");
 
 
         Request request2 = new Request();
@@ -181,7 +181,7 @@ public class GamesServiceHandlerTest {
 
         String message2 = new String(response2.getMessage());
         Assert.assertEquals(message2, "{\"game_id\":1,\"occupiedMap\":[[true,false,false],[false,true,false],[false,false,false]],"
-            + "\"markerMap\":[\"X  \",\" O \",\"   \"]}");
+            + "\"markerMap\":[\"X  \",\" O \",\"   \"],\"links\": [{\"rel\": \"self\",\"href\": \"http://localhost:5000/games/1\"},{\"rel\": \"mark_spot\",\"href\": \"http://localhost:5000/games/1/spots/:spot_id\"}]}");
 
 
     }
