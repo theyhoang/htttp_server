@@ -37,7 +37,7 @@ public class LinkUtils {
     String localhost = "http://localhost:" + Server.getPortNumber();
     Link selfLink = new Link("self", localhost + "/games/" + gameBoard.getGame_id());
     Link spotLink = new Link("mark_spot", localhost + "/games/"
-        + gameBoard.getGame_id() + "/spots/:spot_id");
+        + gameBoard.getGame_id() + "/spots/{{spot_id}}");
 
     links.add(selfLink);
     links.add(spotLink);

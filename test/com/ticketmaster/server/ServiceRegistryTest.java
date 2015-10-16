@@ -17,7 +17,7 @@ public class ServiceRegistryTest {
     @Test
     public void testConstructResponse() {
 
-        ServiceRegistry serviceRegistry = new ServiceRegistry();
+        ServiceRegistry serviceRegistry = ServiceRegistry.initialize();
         FileUtils.publicDirPath = "";
 
         Request request = new Request();
@@ -35,7 +35,7 @@ public class ServiceRegistryTest {
 
     @Test
     public void testGetDirectoryContents() {
-        ServiceRegistry serviceRegistry = new ServiceRegistry();
+        ServiceRegistry serviceRegistry = ServiceRegistry.initialize();
 
         URL url = getClass().getClassLoader().getResource("./");
         FileUtils.publicDirPath = url.getPath();
@@ -52,7 +52,7 @@ public class ServiceRegistryTest {
 
     @Test
     public void testGetFileContent() {
-        ServiceRegistry serviceRegistry = new ServiceRegistry();
+        ServiceRegistry serviceRegistry = ServiceRegistry.initialize();
         FileUtils.publicDirPath = "";
 
         URL url = getClass().getClassLoader().getResource("./");
@@ -73,7 +73,7 @@ public class ServiceRegistryTest {
 
     @Test
     public void testGetImageFiles() {
-        ServiceRegistry serviceRegistry = new ServiceRegistry();
+        ServiceRegistry serviceRegistry = ServiceRegistry.initialize();
         FileUtils.publicDirPath = "";
 
         URL url = getClass().getClassLoader().getResource("./");

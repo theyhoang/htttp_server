@@ -23,21 +23,14 @@ public class GamesServiceHandler implements ServiceHandler{
         Response response = new Response();
         response.setHttpVersion(HTTP_VERSION);
 
-        // figure out if we get single or multiple games
-
-        // get all games - games
-        // get single - games/{game_id}
         // TODO: get spot_id info games/{game_id}/spot
         if (isValidEndpointGames(request.getUrl())) {
             response.setStatusCode(Response.STATUS_CODE_OK);
-            // TODO:
             response.setMessage((GameUtils.printAllGames(TicTacToeApp.retrieveAllGames())).getBytes());
         } else if (isValidEndpointForSingleGame(request.getUrl())) {
-            // retrieve resource_id
             GameBoard game = retrieveGame(request.getUrl());
             if (game != null) {
                 response.setStatusCode(Response.STATUS_CODE_OK);
-                // TODO:
                 response.setMessage((GameUtils.printGame(game)).getBytes());
             } else {
                 response.setStatusCode(Response.STATUS_CODE_NOT_FOUND);
@@ -62,29 +55,22 @@ public class GamesServiceHandler implements ServiceHandler{
         Response response = new Response();
         response.setHttpVersion(HTTP_VERSION);
 
-
-
-        // TODO: validate endpoint
-
         if (isValidEndpointGames(request.getUrl())) {
-            // add new game
             GameBoard game = TicTacToeApp.addNewGame();
-            // put game into message
             response.setStatusCode(Response.STATUS_CODE_OK);
-            // TODO:
             response.setMessage((GameUtils.printGame(game)).getBytes());
-            // return empty game object with new game_id?
         } else if (isValidEndpointForSpots(request.getUrl())) {
+
             int spotId = parseSpotId(request.getMessage());
             GameBoard game = retrieveGame(request.getUrl());
             if (spotId != -1 && game != null) {
                 game = TicTacToeApp.pickSpot(game.getGame_id(), spotId);
                 response.setStatusCode(Response.STATUS_CODE_OK);
-                // TODO:
                 response.setMessage((GameUtils.printGame(game)).getBytes());
             } else {
                 response.setStatusCode(Response.STATUS_CODE_BAD_REQUEST);
             }
+
         } else {
             response.setStatusCode(Response.STATUS_CODE_NOT_FOUND);
         }

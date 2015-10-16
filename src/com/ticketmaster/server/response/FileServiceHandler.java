@@ -57,9 +57,11 @@ public class FileServiceHandler implements ServiceHandler{
         List<String> headers = request.getHeaders();
 
         // Range: bytes=0-999
-        for (String header : headers) {
-            if (header.startsWith("Range:")) {
-                return true;
+        if (headers != null) {
+            for (String header : headers) {
+                if (header.startsWith("Range:")) {
+                    return true;
+                }
             }
         }
         return false;
