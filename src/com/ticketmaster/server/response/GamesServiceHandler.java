@@ -35,6 +35,18 @@ public class GamesServiceHandler implements ServiceHandler{
             } else {
                 response.setStatusCode(Response.STATUS_CODE_NOT_FOUND);
             }
+        } else if (isValidGETEndpointForSpot(request.getUrl())) {
+            GameBoard game = retrieveGame(request.getUrl());
+            int spotId = retrieveSpotIdFromPath(request.getUrl());
+            if (spotId != -1) {
+                char marker = game.getMarkerAtSpot(spotId);
+                response.setMessage(("{\"game_id\":" + game.getGame_id() + ", \"spot\": "
+                    + "{\"spot_id\":" + spotId + ",\"marker\":\"" + marker + "\"}").getBytes());
+                response.setStatusCode(Response.STATUS_CODE_OK);
+            } else {
+                response.setStatusCode(Response.STATUS_CODE_BAD_REQUEST);
+            }
+
         } else {
             response.setStatusCode(Response.STATUS_CODE_NOT_FOUND);
         }
@@ -59,7 +71,7 @@ public class GamesServiceHandler implements ServiceHandler{
             GameBoard game = TicTacToeApp.addNewGame();
             response.setStatusCode(Response.STATUS_CODE_OK);
             response.setMessage((GameUtils.printGame(game)).getBytes());
-        } else if (isValidEndpointForSpots(request.getUrl())) {
+        } else if (isValidPOSTEndpointForSpots(request.getUrl())) {
 
             int spotId = parseSpotId(request.getMessage());
             GameBoard game = retrieveGame(request.getUrl());
@@ -122,7 +134,7 @@ public class GamesServiceHandler implements ServiceHandler{
         }
     }
 
-    private boolean isValidEndpointForSpots(String path) {
+    private boolean isValidPOSTEndpointForSpots(String path) {
         // games/{game_id}/spots
         path = path.substring(1);
         List<String> paths = Arrays.asList(path.split("/"));
@@ -140,6 +152,54 @@ public class GamesServiceHandler implements ServiceHandler{
         }
 
         return false;
+    }
+
+    private boolean isValidGETEndpointForSpot(String path) {
+        // games/{game_id/spots/{spot_id}
+        path = path.substring(1);
+        List<String> paths = Arrays.asList(path.split("/"));
+        if (paths.size() == 4) {
+            // check if game_id is valid number
+            Integer gameId = null;
+            try {
+                gameId  = Integer.parseInt(paths.get(1));
+            } catch( NumberFormatException nfe) {
+                return false;
+            }
+            if (paths.get(2).equals("spots") && TicTacToeApp.retrieveGame(gameId) != null) {
+                try {
+                    int spotId = Integer.parseInt(paths.get(3));
+                    if (spotId >= 1 && spotId <= 9) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } catch( NumberFormatException nfe) {
+                    return false;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private int retrieveSpotIdFromPath(String path) {
+        if (isValidGETEndpointForSpot(path)) {
+            path = path.substring(1);
+            List<String> paths = Arrays.asList(path.split("/"));
+            try {
+                int spotId = Integer.parseInt(paths.get(3));
+                if (spotId >= 1 && spotId <= 9) {
+                    return spotId;
+                } else {
+                    return -1;
+                }
+            } catch( NumberFormatException nfe) {
+                return -1;
+            }
+        } else {
+            return -1;
+        }
     }
 
     private int retrieveGameId(String path) {

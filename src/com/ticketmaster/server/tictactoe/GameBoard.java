@@ -274,6 +274,42 @@ public class GameBoard {
         return availableMoves;
     }
 
+    public char getMarkerAtSpot(int spotId) {
+        char marker = ' ';
+        switch(spotId) {
+            case 1:
+                marker = markerMap[0][0];
+                break;
+            case 2:
+                marker = markerMap[1][0];
+                break;
+            case 3:
+                marker = markerMap[2][0];
+                break;
+            case 4:
+                marker = markerMap[0][1];
+                break;
+            case 5:
+                marker = markerMap[1][1];
+                break;
+            case 6:
+                marker = markerMap[2][1];
+                break;
+            case 7:
+                marker = markerMap[0][2];
+                break;
+            case 8:
+                marker = markerMap[1][2];
+                break;
+            case 9:
+                marker = markerMap[2][2];
+                break;
+            default:
+                marker = ' ';
+        }
+        return marker;
+    }
+
     public boolean[][] getOccupiedMap() {
         return occupiedMap;
     }

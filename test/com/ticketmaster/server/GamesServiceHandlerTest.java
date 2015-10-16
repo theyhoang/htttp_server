@@ -185,4 +185,56 @@ public class GamesServiceHandlerTest {
 
 
     }
+
+    @Test
+    public void testGetSpotEndpont() {
+        TicTacToeApp.reset();
+        ServiceRegistry serviceRegistry = ServiceRegistry.initialize();
+
+        // create initial game
+        Request request = new Request();
+        request.setHttpVersion("HTTP/1.1");
+        request.setHttpMethod(Method.POST);
+        request.setUrl("/games");
+
+        Assert.assertNotNull(request);
+
+        Response response = serviceRegistry.generateResponse(request);
+        Assert.assertNotNull(response);
+        Assert.assertEquals(response.getStatusCode(), Response.STATUS_CODE_OK);
+
+        String message = new String(response.getMessage());
+        Assert.assertEquals(message, "{\"game_id\":1,\"occupiedMap\":[[false,false,false],[false,false,false],[false,false,false]],"
+            + "\"markerMap\":[\"   \",\"   \",\"   \"],\"links\": [{\"rel\": \"self\",\"href\": \"http://localhost:5000/games/1\"},{\"rel\": \"mark_spot\",\"href\": \"http://localhost:5000/games/1/spots/{{spot_id}}\"}]}");
+
+
+        Request request2 = new Request();
+        request2.setHttpVersion("HTTP/1.1");
+        request2.setHttpMethod(Method.POST);
+        request2.setUrl("/games/1/spots");
+        request2.setMessage("{\"spot_id\":1}");
+
+        Assert.assertNotNull(request2);
+
+        Response response2 = serviceRegistry.generateResponse(request2);
+        Assert.assertNotNull(response2);
+        Assert.assertEquals(response2.getStatusCode(), Response.STATUS_CODE_OK);
+
+        String message2 = new String(response2.getMessage());
+        Assert.assertEquals(message2, "{\"game_id\":1,\"occupiedMap\":[[true,false,false],[false,true,false],[false,false,false]],"
+            + "\"markerMap\":[\"X  \",\" O \",\"   \"],\"links\": [{\"rel\": \"self\",\"href\": \"http://localhost:5000/games/1\"},{\"rel\": \"mark_spot\",\"href\": \"http://localhost:5000/games/1/spots/{{spot_id}}\"}]}");
+
+
+        Request request3 = new Request();
+        request3.setHttpVersion("HTTP/1.1");
+        request3.setHttpMethod(Method.GET);
+        request3.setUrl("/games/1/spots/1");
+
+        Response response3 = serviceRegistry.generateResponse(request3);
+        Assert.assertNotNull(response3);
+        Assert.assertEquals(response3.getStatusCode(), Response.STATUS_CODE_OK);
+
+        String message3 = new String(response3.getMessage());
+        Assert.assertEquals(message3, "{\"game_id\":1, \"spot\": {\"spot_id\":1,\"marker\":\"X\"}");
+    }
 }
